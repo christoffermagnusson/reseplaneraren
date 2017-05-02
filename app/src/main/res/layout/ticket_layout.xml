@@ -7,5 +7,6 @@
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TICKET" />
+        android:text="TICKET"
+        android:textAlignment="center" />
 </LinearLayout>
