@@ -9,17 +9,22 @@
 
     <TextView
         android:id="@+id/departureLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="22dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
         android:text="Från"
         app:layout_constraintBottom_toTopOf="@+id/departureSearchField"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_conversion_absoluteHeight="22dp"
         tools:layout_conversion_absoluteWidth="57dp"
         tools:layout_conversion_absoluteX="7dp"
-        tools:layout_conversion_absoluteY="70dp" />
+        tools:layout_conversion_absoluteY="70dp"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <EditText
         android:id="@+id/departureSearchField"
@@ -29,47 +34,47 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_conversion_absoluteHeight="53dp"
         tools:layout_conversion_absoluteWidth="368dp"
         tools:layout_conversion_absoluteX="8dp"
         tools:layout_conversion_absoluteY="100dp"
-        tools:layout_editor_absoluteY="196dp" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/departureLabel" />
 
     <TextView
         android:id="@+id/destinationLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:text="Till"
-        app:layout_constraintBottom_toTopOf="@+id/destinationSearchField"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/departureSearchField"
-        app:layout_constraintVertical_bias="0.869"
         tools:layout_conversion_absoluteHeight="22dp"
         tools:layout_conversion_absoluteWidth="57dp"
         tools:layout_conversion_absoluteX="8dp"
-        tools:layout_conversion_absoluteY="167dp" />
+        tools:layout_conversion_absoluteY="167dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/departureSearchField"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/destinationSearchField"
-        android:layout_width="367dp"
-        android:layout_height="53dp"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="7dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/destinationLabel"
         tools:layout_conversion_absoluteHeight="53dp"
         tools:layout_conversion_absoluteWidth="367dp"
         tools:layout_conversion_absoluteX="9dp"
-        tools:layout_conversion_absoluteY="198dp"
-        tools:layout_editor_absoluteY="291dp" />
-
-
+        tools:layout_conversion_absoluteY="198dp" />
 </android.support.constraint.ConstraintLayout>
