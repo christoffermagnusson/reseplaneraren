@@ -1,5 +1,7 @@
 package com.example.reseplaneraren2;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -40,5 +42,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         System.out.println("Testing_new_commit");
+    }
+
+    private void inflate(Screen screenToDisplay){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+
+
     }
 }
