@@ -2,6 +2,7 @@ package com.example.reseplaneraren2;
 
 import android.support.v4.app.Fragment;
 
+import com.example.reseplaneraren2.controllers.departuredisplay.DepartureDisplayController;
 import com.example.reseplaneraren2.controllers.favorites.FavoritesController;
 import com.example.reseplaneraren2.controllers.nexttrip.NextTripController;
 import com.example.reseplaneraren2.controllers.searchtrip.SearchTripController;
@@ -14,7 +15,7 @@ public enum Screen {
     FAVORITES(new FavoritesController()),
     TICKET(new TicketController()),
 
-    DEPARTURE_DISPLAY (new DepartureDisplay());
+    DEPARTURE_DISPLAY (new DepartureDisplayController());
 
     private Fragment fragment;
 
