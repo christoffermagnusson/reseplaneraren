@@ -4,5 +4,21 @@ package com.example.reseplaneraren2.controllers.ticket;
  * Created by christoffer on 2017-05-02.
  */
 
-public class TicketController {
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.example.reseplaneraren2.R;
+
+
+public class TicketController extends Fragment {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        return inflater.inflate(R.layout. ticket_layout, container, false);
+
+    }
 }
+
