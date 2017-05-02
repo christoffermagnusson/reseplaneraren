@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">reseplaneraren2</string>
+    <string name="favorites">Favoriter</string>
+    <string name="search_trip">Sök resa</string>
+    <string name="next_trip">Nästa tur</string>
+    <string name="ticket">Biljetter</string>
 </resources>
