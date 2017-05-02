@@ -4,4 +4,7 @@
     <string name="search_trip">Sök resa</string>
     <string name="next_trip">Nästa tur</string>
     <string name="ticket">Biljetter</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
