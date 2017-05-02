@@ -4,21 +4,21 @@
     <item
         android:id="@+id/navigation_search_trip"
         android:icon="@drawable/ic_search_trip_24dp"
-        android:title="Search trip" />
+        android:title="@string/search_trip" />
 
     <item
         android:id="@+id/navigation_next_trip"
         android:icon="@drawable/ic_next_trip_24dp"
-        android:title="Next trip" />
+        android:title="@string/next_trip" />
 
     <item
         android:id="@+id/navigation_favorites"
         android:icon="@drawable/ic_favorites_24dp"
-        android:title="Favorites" />
+        android:title="@string/favorites" />
 
     <item
         android:id="@+id/navigation_ticket"
         android:icon="@drawable/ic_ticket_24dp"
-        android:title="Ticket"/>
+        android:title="@string/ticket"/>
 
 </menu>
