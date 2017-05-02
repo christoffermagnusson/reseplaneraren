@@ -12,7 +12,9 @@ public enum Screen {
     SEARCH_TRIP(new SearchTripController()),
     NEXT_TRIP(new NextTripController()),
     FAVORITES(new FavoritesController()),
-    TICKET(new TicketController());
+    TICKET(new TicketController()),
+
+    DEPARTURE_DISPLAY (new DepartureDisplay());
 
     private Fragment fragment;
 
