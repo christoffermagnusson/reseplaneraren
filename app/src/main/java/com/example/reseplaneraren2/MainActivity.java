@@ -19,16 +19,16 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_search_trip:
-                    // Do something
+                    inflate(Screen.SEARCH_TRIP);
                     return true;
                 case R.id.navigation_next_trip:
-                    // Do something
+                    inflate(Screen.NEXT_TRIP);
                     return true;
                 case R.id.navigation_favorites:
-                    // Do something
+                    inflate(Screen.FAVORITES);
                     return true;
                 case R.id.navigation_ticket:
-                    // Do something
+                    inflate(Screen.TICKET);
                     return true;
             }
             return false;
@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
-
+        transaction.replace(R.id.fragment_container, screenToDisplay.getFragment());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
