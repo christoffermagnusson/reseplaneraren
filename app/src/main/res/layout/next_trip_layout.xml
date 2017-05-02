@@ -12,7 +12,7 @@
         android:id="@+id/searchStopLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Sök hållplats"
+        android:text="@string/layout_nextTrip_searchLabel"
         android:textSize="18dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -27,7 +27,7 @@
         android:id="@+id/searchStopField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:completionHint="Sök..."
+        android:completionHint="@string/layout_nextTrip_searchHint"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
@@ -38,13 +38,13 @@
         android:layout_marginEnd="8dp" />
 
     <TextView
-        android:id="@+id/nearbyStopLabel"
+        android:id="@+id/nearbyStopsLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="Närliggande hållplatser"
+        android:text="@string/layout_nextTrip_nearbyStopsLabel"
         android:textSize="18dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -53,7 +53,7 @@
         android:layout_marginEnd="8dp" />
 
     <ListView
-        android:id="@+id/nearbyStopList"
+        android:id="@+id/nearbyStopsList"
         android:layout_width="368dp"
         android:layout_height="385dp"
         android:layout_marginTop="8dp"
