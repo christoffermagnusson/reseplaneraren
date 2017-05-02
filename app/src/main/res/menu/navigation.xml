@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_search_trip"
+        android:icon="@drawable/ic_search_trip_24dp"
+        android:title="Search trip" />
+
+    <item
+        android:id="@+id/navigation_next_trip"
+        android:icon="@drawable/ic_next_trip_24dp"
+        android:title="Next trip" />
+
+    <item
+        android:id="@+id/navigation_favorites"
+        android:icon="@drawable/ic_favorites_24dp"
+        android:title="Favorites" />
+
+    <item
+        android:id="@+id/navigation_ticket"
+        android:icon="@drawable/ic_ticket_24dp"
+        android:title="Ticket"/>
+
+</menu>
