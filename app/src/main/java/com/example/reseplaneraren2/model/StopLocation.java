@@ -5,4 +5,13 @@ package com.example.reseplaneraren2.model;
  */
 
 public class StopLocation {
+
+    private String name;
+    private int stopId;
+
+
+    public StopLocation(String name,int stopId){
+            this.name = name;
+            this.stopId = stopId;
+    }
 }
