@@ -1,12 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView3"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SEARCH_TRIP"
-        android:textAlignment="center" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/searchTripMainLabel"
+            android:layout_width="371dp"
+            android:layout_height="41dp"
+            android:text="Sök resa"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintHorizontal_bias="0.33" />
+
+        <TextView
+            android:id="@+id/departureLabel"
+            android:layout_width="57dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="8dp"
+            android:text="Från"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/departureSearchField"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/searchTripMainLabel"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/departureSearchField"
+            android:layout_width="0dp"
+            android:layout_height="53dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="88dp" />
+
+        <TextView
+            android:id="@+id/destinationLabel"
+            android:layout_width="57dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="2dp"
+            android:text="Till"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/departureSearchField"
+            android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/destinationSearchField"
+            app:layout_constraintVertical_bias="0.526" />
+
+        <EditText
+            android:id="@+id/destinationSearchField"
+            android:layout_width="367dp"
+            android:layout_height="53dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="162dp"
+            app:layout_constraintHorizontal_bias="0.0" />
+    </android.support.constraint.ConstraintLayout>
+
 </LinearLayout>
