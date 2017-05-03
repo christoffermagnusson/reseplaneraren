@@ -69,6 +69,9 @@ public class NextTripController extends Fragment implements IStopLocationHandler
             public void afterTextChanged(Editable s) {}
         });
 
+        // testing coordinate function
+        JourneyPlannerFactory.getJourneyPlanner().getStopLocationByCoordinate(locHandler,null);
+
         searchAdapter = new StopLocationAdapter(getContext(), R.layout.next_trip_autocomplete, mStopLocationsBySearch);
         autoCompleteTextView.setAdapter(searchAdapter);
 
