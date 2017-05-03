@@ -31,7 +31,7 @@ public class StopLocationAdapter extends ArrayAdapter<StopLocation> {
         this.mViewId = viewId;
         this.mContext = context;
         this.mStopLocations_All = new ArrayList<>(stopLocations);
-        this. mStopLocations_Suggestion = new ArrayList<>();
+        this.mStopLocations_Suggestion = new ArrayList<>();
 
 
     }

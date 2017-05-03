@@ -30,11 +30,11 @@ public class DummyJourneyPlanner implements IJourneyPlannerData {
 
     @Override
     public void getStopLocationByName(IStopLocationHandler handler, String request) {
-
+        handler.receiveStopLocation(stopList);
     }
 
     @Override
     public void getDepartureBoard(IDepartureHandler handler, StopLocation location, Calendar calendar) {
-
+        handler.receiveDeparture(depList);
     }
 }
