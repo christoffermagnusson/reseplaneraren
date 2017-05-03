@@ -6,7 +6,7 @@ package com.example.reseplaneraren2.model;
 
 public class StopLocation {
 
-    private String name;
+    public String name;
     private int stopId;
 
 
