@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
 
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
@@ -26,6 +27,8 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     private ArrayList<StopLocation> mStopLocations;
     AutoCompleteTextView autoCompleteTextView;
     private StopLocationAdapter adapter;
+
+
 
 
     @Override
@@ -52,6 +55,8 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     public void receiveStopLocationError(String message) {
 
     }
+
+
 
     private void proceedToDepartureDisplay(StopLocation selectedLocation){
         MainActivity activity = (MainActivity) this.getActivity();
