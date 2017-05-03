@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 public interface IStopLocationHandler {
 
-    public void receiveStopLocation(ArrayList<StopLocation> stopLocList);
+    public void receiveStopLocationBySearch(ArrayList<StopLocation> stopLocList);
+
+    public void receiveStopLocationByCoordinate(ArrayList<StopLocation> stopLocList);
 
     public void receiveStopLocationError(String message);
 

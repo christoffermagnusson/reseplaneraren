@@ -15,13 +15,19 @@ import java.util.Calendar;
 
 public class DummyJourneyPlanner implements IJourneyPlannerData {
 
-    ArrayList<StopLocation> stopList = new ArrayList<StopLocation>();
+    ArrayList<StopLocation> stopListBySearch = new ArrayList<StopLocation>();
+    ArrayList<StopLocation> stopListByCoordinate = new ArrayList<StopLocation>();
     ArrayList<Departure> depList = new ArrayList<Departure>();
 
     public DummyJourneyPlanner(){
-        stopList.add(new StopLocation("Redbergsplatsen",1));
-        stopList.add(new StopLocation("Hisingen",2));
-        stopList.add(new StopLocation("Centralstationen",3));
+        stopListBySearch.add(new StopLocation("Redbergsplatsen",1));
+        stopListBySearch.add(new StopLocation("Hisingen",2));
+        stopListBySearch.add(new StopLocation("Centralstationen",3));
+
+        stopListByCoordinate.add(new StopLocation("Lindholmen",4));
+        stopListByCoordinate.add(new StopLocation("Lindholmspiren",5));
+        stopListByCoordinate.add(new StopLocation("Teknikgatan",6));
+
 
         depList.add(new Departure("60","Masthugget"));
         depList.add(new Departure("11","Saltholmen"));
@@ -30,7 +36,12 @@ public class DummyJourneyPlanner implements IJourneyPlannerData {
 
     @Override
     public void getStopLocationByName(IStopLocationHandler handler, String request) {
-        handler.receiveStopLocation(stopList);
+        handler.receiveStopLocationBySearch(stopListBySearch);
+    }
+
+    @Override
+    public void getStopLocationByCoordinate(IStopLocationHandler handler, String request){
+        handler.receiveStopLocationByCoordinate(stopListByCoordinate);
     }
 
     @Override

@@ -79,10 +79,16 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     }
 
     @Override
-    public void receiveStopLocation(ArrayList<StopLocation> stopLocList) {
+    public void receiveStopLocationBySearch(ArrayList<StopLocation> stopLocList) {
         Log.d("dunkDEBUG", "Received stuff");
         mStopLocationsBySearch.clear();
         mStopLocationsBySearch.addAll(stopLocList);
+    }
+
+    @Override
+    public void receiveStopLocationByCoordinate(ArrayList<StopLocation> stopLocList){
+        mStopLocationsNearby.clear();
+        mStopLocationsNearby.addAll(stopLocList);
     }
 
     @Override
