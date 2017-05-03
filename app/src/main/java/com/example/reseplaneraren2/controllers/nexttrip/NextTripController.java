@@ -2,6 +2,8 @@ package com.example.reseplaneraren2.controllers.nexttrip;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,8 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     AutoCompleteTextView autoCompleteTextView;
     private StopLocationAdapter adapter;
 
+    private IStopLocationHandler locHandler;
+
 
 
 
@@ -35,12 +39,24 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.next_trip_layout, container, false);
 
-
-
         autoCompleteTextView = (AutoCompleteTextView)v.findViewById(R.id.searchStopField);
         mStopLocations = new ArrayList<StopLocation>();
+        locHandler = this;
 
-        JourneyPlannerFactory.getJourneyPlanner().getStopLocationByName(this, "abc");
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() >= 3) {
+                    JourneyPlannerFactory.getJourneyPlanner().getStopLocationByName(locHandler, s.toString());
+                    // Could implement something here to wait 0,75s~ between requests to reduce amount of requests
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         return v;
     }
 
