@@ -1,4 +1,4 @@
-package com.example.reseplaneraren2.data;
+package com.example.reseplaneraren2.data.interfaces;
 
 import com.example.reseplaneraren2.model.Departure;
 
