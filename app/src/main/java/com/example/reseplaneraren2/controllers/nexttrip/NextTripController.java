@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
@@ -61,6 +62,14 @@ public class NextTripController extends Fragment implements IStopLocationHandler
             public void afterTextChanged(Editable s) {}
         });
 
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                StopLocation selectedStop = (StopLocation) parent.getItemAtPosition(pos);
+                proceedToDepartureDisplay(selectedStop);
+            }
+        });
+
         adapter = new StopLocationAdapter(getContext(), R.layout.next_trip_autocomplete, mStopLocations);
         autoCompleteTextView.setAdapter(adapter);
         nearbyList.setAdapter(adapter);
@@ -70,7 +79,6 @@ public class NextTripController extends Fragment implements IStopLocationHandler
 
     @Override
     public void receiveStopLocation(ArrayList<StopLocation> stopLocList) {
-        Log.d("dunkDEBUG", "Received stuff");
         mStopLocations.clear();
         mStopLocations.addAll(stopLocList);
     }
@@ -85,6 +93,8 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     private void proceedToDepartureDisplay(StopLocation selectedLocation){
         MainActivity activity = (MainActivity) this.getActivity();
 
+        /* Weird bug with autocomplete when going back to this screen. Clearing.*/
+        autoCompleteTextView.setText("");
         activity.inflateDepartureDisplay(Screen.DEPARTURE_DISPLAY, selectedLocation);
     }
 
