@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,14 +58,17 @@ public class NextTripController extends Fragment implements IStopLocationHandler
             public void afterTextChanged(Editable s) {}
         });
 
+        adapter = new StopLocationAdapter(getContext(), R.layout.next_trip_autocomplete, mStopLocations);
+        autoCompleteTextView.setAdapter(adapter);
+
         return v;
     }
 
     @Override
     public void receiveStopLocation(ArrayList<StopLocation> stopLocList) {
+        Log.d("dunkDEBUG", "Received stuff");
+        mStopLocations.clear();
         mStopLocations.addAll(stopLocList);
-        adapter = new StopLocationAdapter(getContext(), R.layout.next_trip_autocomplete, mStopLocations);
-        autoCompleteTextView.setAdapter(adapter);
     }
 
     @Override
