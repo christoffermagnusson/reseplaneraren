@@ -58,6 +58,11 @@ public class StopLocationAdapter extends ArrayAdapter<StopLocation> {
     public Filter getFilter(){
         return new Filter(){
             @Override
+            public String convertResultToString(Object resultValue){
+                return ((StopLocation) resultValue).name;
+            }
+
+            @Override
             protected  FilterResults performFiltering(CharSequence constrain){
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = mStopLocations_Suggestion;
