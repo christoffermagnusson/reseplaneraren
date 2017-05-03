@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
+import com.example.reseplaneraren2.Screen;
 import com.example.reseplaneraren2.data.interfaces.IStopLocationHandler;
 import com.example.reseplaneraren2.model.StopLocation;
 
@@ -26,12 +28,18 @@ public class NextTripController extends Fragment implements IStopLocationHandler
 
     @Override
     public void receiveStopLocation(ArrayList<StopLocation> stopLocList) {
-
+        // populera listan som ska finnas i denna view
     }
 
     @Override
     public void receiveStopLocationError(String message) {
 
+    }
+
+    private void proceedToDepartureDisplay(StopLocation selectedLocation){
+        MainActivity activity = (MainActivity) this.getActivity();
+
+        activity.inflateDepartureDisplay(Screen.DEPARTURE_DISPLAY, selectedLocation);
     }
 
 

@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.reseplaneraren2.controllers.departuredisplay.DepartureDisplayController;
+import com.example.reseplaneraren2.model.StopLocation;
+
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView navigationView;
@@ -49,12 +52,19 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Testing_new_commit");
     }
 
-    private void inflate(Screen screenToDisplay){
+    public void inflate(Screen screenToDisplay){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
         transaction.replace(R.id.fragment_container, screenToDisplay.getFragment());
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void inflateDepartureDisplay(Screen screenToDisplay, StopLocation stopLocation){
+        inflate(screenToDisplay);
+        DepartureDisplayController controller = (DepartureDisplayController) screenToDisplay.getFragment();
+        controller.setStopLocation(stopLocation);
+
     }
 }

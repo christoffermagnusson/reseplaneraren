@@ -1,3 +1,4 @@
+
 package com.example.reseplaneraren2.controllers.departuredisplay;
 
 import android.content.Context;
@@ -34,7 +35,11 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
     private String mParam1;
     private String mParam2;
 
+
+
     private OnFragmentInteractionListener mListener;
+
+    private StopLocation stopLocation = null;
 
     public DepartureDisplayController() {
         // Required empty public constructor
@@ -108,6 +113,12 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
     public void receiveDepartureError(String message) {
 
     }
+
+    public void setStopLocation(StopLocation stopLocation){
+        this.stopLocation=stopLocation;
+    }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
