@@ -53,6 +53,7 @@ public class NextTripController extends Fragment implements IStopLocationHandler
 
         setupTextListener();
         setupSearchClickListener();
+        setupListClickListener();
 
         // testing coordinate function
         JourneyPlannerFactory.getJourneyPlanner().getStopLocationByCoordinate(locHandler,null);
@@ -109,6 +110,7 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     }
 
     private void setupSearchClickListener() {
+
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
@@ -117,4 +119,19 @@ public class NextTripController extends Fragment implements IStopLocationHandler
             }
         });
     }
+
+    private void setupListClickListener() {
+
+        nearbyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                StopLocation stop = (StopLocation) parent.getItemAtPosition(pos);
+                proceedToDepartureDisplay(stop);
+            }
+        });
+    }
+
+
+
+
 }
