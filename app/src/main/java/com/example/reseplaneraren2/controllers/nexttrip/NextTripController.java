@@ -33,6 +33,8 @@ public class NextTripController extends Fragment implements IStopLocationHandler
 
     private IStopLocationHandler locHandler;
 
+    private ListView nearbyList;
+
 
 
 
@@ -40,6 +42,7 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.next_trip_layout, container, false);
 
+        nearbyList = (ListView) v.findViewById(R.id.nearbyStopsList);
         autoCompleteTextView = (AutoCompleteTextView)v.findViewById(R.id.searchStopField);
         mStopLocations = new ArrayList<StopLocation>();
         locHandler = this;
@@ -60,6 +63,7 @@ public class NextTripController extends Fragment implements IStopLocationHandler
 
         adapter = new StopLocationAdapter(getContext(), R.layout.next_trip_autocomplete, mStopLocations);
         autoCompleteTextView.setAdapter(adapter);
+        nearbyList.setAdapter(adapter);
 
         return v;
     }
