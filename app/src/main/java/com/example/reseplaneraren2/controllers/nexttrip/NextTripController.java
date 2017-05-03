@@ -27,13 +27,17 @@ import java.util.ArrayList;
 
 public class NextTripController extends Fragment implements IStopLocationHandler {
 
-    private ArrayList<StopLocation> mStopLocations;
+    private ArrayList<StopLocation> mStopLocationsBySearch;
     AutoCompleteTextView autoCompleteTextView;
-    private StopLocationAdapter adapter;
+    private StopLocationAdapter searchAdapter;
+
+    private ArrayList<StopLocation> mStopLocationsNearby;
+    private StopLocationAdapter nearbyAdapter;
+    private ListView nearbyList;
 
     private IStopLocationHandler locHandler;
 
-    private ListView nearbyList;
+
 
 
 
@@ -42,9 +46,13 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.next_trip_layout, container, false);
 
-        nearbyList = (ListView) v.findViewById(R.id.nearbyStopsList);
+
         autoCompleteTextView = (AutoCompleteTextView)v.findViewById(R.id.searchStopField);
-        mStopLocations = new ArrayList<StopLocation>();
+        mStopLocationsBySearch = new ArrayList<StopLocation>();
+
+        nearbyList = (ListView) v.findViewById(R.id.nearbyStopsList);
+        mStopLocationsNearby = new ArrayList<StopLocation>();
+
         locHandler = this;
 
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
@@ -61,18 +69,26 @@ public class NextTripController extends Fragment implements IStopLocationHandler
             public void afterTextChanged(Editable s) {}
         });
 
-        adapter = new StopLocationAdapter(getContext(), R.layout.next_trip_autocomplete, mStopLocations);
-        autoCompleteTextView.setAdapter(adapter);
-        nearbyList.setAdapter(adapter);
+        searchAdapter = new StopLocationAdapter(getContext(), R.layout.next_trip_autocomplete, mStopLocationsBySearch);
+        autoCompleteTextView.setAdapter(searchAdapter);
+
+        nearbyAdapter = new StopLocationAdapter(getContext(),R.layout.next_trip_autocomplete, mStopLocationsNearby);
+        nearbyList.setAdapter(nearbyAdapter);
 
         return v;
     }
 
     @Override
-    public void receiveStopLocation(ArrayList<StopLocation> stopLocList) {
+    public void receiveStopLocationBySearch(ArrayList<StopLocation> stopLocList) {
         Log.d("dunkDEBUG", "Received stuff");
-        mStopLocations.clear();
-        mStopLocations.addAll(stopLocList);
+        mStopLocationsBySearch.clear();
+        mStopLocationsBySearch.addAll(stopLocList);
+    }
+
+    @Override
+    public void receiveStopLocationByCoordinate(ArrayList<StopLocation> stopLocList){
+        mStopLocationsNearby.clear();
+        mStopLocationsNearby.addAll(stopLocList);
     }
 
     @Override
