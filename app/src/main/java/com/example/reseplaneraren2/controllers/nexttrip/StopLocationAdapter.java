@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by samuel on 2017-05-03.
  */
 
-public class StopLocationAdapter extends ArrayAdapter<StopLocation> implements {
+public class StopLocationAdapter extends ArrayAdapter<StopLocation> {
     private ArrayList<StopLocation> mStopLocations;
     private ArrayList<StopLocation> mStopLocations_All;
     private ArrayList<StopLocation> mStopLocations_Suggestion;
@@ -26,7 +26,7 @@ public class StopLocationAdapter extends ArrayAdapter<StopLocation> implements {
     private Context mContext;
 
     public StopLocationAdapter(Context context, int viewId, ArrayList<StopLocation> stopLocations){
-        super(context, view, stopLocations);
+        super(context, viewId, stopLocations);
         this.mStopLocations = stopLocations;
         this.mViewId = viewId;
         this.mContext = context;
