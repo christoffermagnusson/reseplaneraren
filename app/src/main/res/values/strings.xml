@@ -6,7 +6,6 @@
     <string name="ticket">Biljetter</string>
 
     <string name="layout_nextTrip_searchLabel">Sök hållplats</string>
-    <string name="layout_nextTrip_searchHint">Sök...</string>
     <string name="layout_nextTrip_nearbyStopsLabel">Närliggande hållplatser</string>
 
     <!-- TODO: Remove or change this placeholder text -->
