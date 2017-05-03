@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorVasttrafikBlue">#01AAEB</color>
+    <color name="colorVasttrafikBlue">#01aaeb</color>
     <color name="colorVasttrafikOrange">#F6781A</color>
     <color name="colorVasttrafikWhite">#FFFFFF</color>
 </resources>
