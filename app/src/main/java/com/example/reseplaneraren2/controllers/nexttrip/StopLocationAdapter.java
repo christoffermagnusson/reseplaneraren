@@ -55,7 +55,23 @@ public class StopLocationAdapter extends ArrayAdapter<StopLocation> {
      return convertView;
     }
 
-    @Override
+    public Filter getFilter(){
+        return new Filter(){
+            @Override
+            protected  FilterResults performFiltering(CharSequence constrain){
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mStopLocations_Suggestion;
+                filterResults.count = mStopLocations_Suggestion.size();
+                return filterResults;
+            }
+            @Override
+            protected void publishResults(CharSequence constrain, FilterResults filterResults){
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+ /*   @Override
     public Filter getFilter(){
         return new Filter() {
              @Override
@@ -98,5 +114,5 @@ public class StopLocationAdapter extends ArrayAdapter<StopLocation> {
         }
         };
 
-    }
+    }**/
 }
