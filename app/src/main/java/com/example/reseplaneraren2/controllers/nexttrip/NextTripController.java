@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
@@ -28,13 +27,17 @@ import java.util.ArrayList;
 
 public class NextTripController extends Fragment implements IStopLocationHandler {
 
-    private ArrayList<StopLocation> mStopLocations;
+    private ArrayList<StopLocation> mStopLocationsBySearch;
     AutoCompleteTextView autoCompleteTextView;
-    private StopLocationAdapter adapter;
+    private StopLocationAdapter searchAdapter;
+
+    private ArrayList<StopLocation> mStopLocationsNearby;
+    private StopLocationAdapter nearbyAdapter;
+    private ListView nearbyList;
 
     private IStopLocationHandler locHandler;
 
-    private ListView nearbyList;
+
 
 
 
@@ -43,9 +46,13 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.next_trip_layout, container, false);
 
-        nearbyList = (ListView) v.findViewById(R.id.nearbyStopsList);
+
         autoCompleteTextView = (AutoCompleteTextView)v.findViewById(R.id.searchStopField);
-        mStopLocations = new ArrayList<StopLocation>();
+        mStopLocationsBySearch = new ArrayList<StopLocation>();
+
+        nearbyList = (ListView) v.findViewById(R.id.nearbyStopsList);
+        mStopLocationsNearby = new ArrayList<StopLocation>();
+
         locHandler = this;
 
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
@@ -62,25 +69,26 @@ public class NextTripController extends Fragment implements IStopLocationHandler
             public void afterTextChanged(Editable s) {}
         });
 
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                StopLocation selectedStop = (StopLocation) parent.getItemAtPosition(pos);
-                proceedToDepartureDisplay(selectedStop);
-            }
-        });
+        searchAdapter = new StopLocationAdapter(getContext(), R.layout.next_trip_autocomplete, mStopLocationsBySearch);
+        autoCompleteTextView.setAdapter(searchAdapter);
 
-        adapter = new StopLocationAdapter(getContext(), R.layout.next_trip_autocomplete, mStopLocations);
-        autoCompleteTextView.setAdapter(adapter);
-        nearbyList.setAdapter(adapter);
+        nearbyAdapter = new StopLocationAdapter(getContext(),R.layout.next_trip_autocomplete, mStopLocationsNearby);
+        nearbyList.setAdapter(nearbyAdapter);
 
         return v;
     }
 
     @Override
-    public void receiveStopLocation(ArrayList<StopLocation> stopLocList) {
-        mStopLocations.clear();
-        mStopLocations.addAll(stopLocList);
+    public void receiveStopLocationBySearch(ArrayList<StopLocation> stopLocList) {
+        Log.d("dunkDEBUG", "Received stuff");
+        mStopLocationsBySearch.clear();
+        mStopLocationsBySearch.addAll(stopLocList);
+    }
+
+    @Override
+    public void receiveStopLocationByCoordinate(ArrayList<StopLocation> stopLocList){
+        mStopLocationsNearby.clear();
+        mStopLocationsNearby.addAll(stopLocList);
     }
 
     @Override
@@ -93,8 +101,6 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     private void proceedToDepartureDisplay(StopLocation selectedLocation){
         MainActivity activity = (MainActivity) this.getActivity();
 
-        /* Weird bug with autocomplete when going back to this screen. Clearing.*/
-        autoCompleteTextView.setText("");
         activity.inflateDepartureDisplay(Screen.DEPARTURE_DISPLAY, selectedLocation);
     }
 
