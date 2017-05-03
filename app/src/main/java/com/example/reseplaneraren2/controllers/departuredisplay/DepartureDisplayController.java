@@ -9,6 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.reseplaneraren2.R;
+import com.example.reseplaneraren2.data.interfaces.IDepartureHandler;
+import com.example.reseplaneraren2.data.interfaces.IStopLocationHandler;
+import com.example.reseplaneraren2.model.Departure;
+import com.example.reseplaneraren2.model.StopLocation;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +24,7 @@ import com.example.reseplaneraren2.R;
  * Use the {@link DepartureDisplayController#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DepartureDisplayController extends Fragment {
+public class DepartureDisplayController  extends Fragment implements IDepartureHandler{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,6 +96,17 @@ public class DepartureDisplayController extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+
+    @Override
+    public void receiveDeparture(ArrayList<Departure> departureList) {
+
+    }
+
+    @Override
+    public void receiveDepartureError(String message) {
+
     }
 
     /**
