@@ -14,4 +14,9 @@ public class StopLocation {
             this.name = name;
             this.stopId = stopId;
     }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }
