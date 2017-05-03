@@ -6,4 +6,5 @@
     <color name="colorVasttrafikBlue">#01aaeb</color>
     <color name="colorVasttrafikOrange">#F6781A</color>
     <color name="colorVasttrafikWhite">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>
