@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
@@ -37,11 +38,6 @@ public class NextTripController extends Fragment implements IStopLocationHandler
 
     private IStopLocationHandler locHandler;
 
-
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.next_trip_layout, container, false);
@@ -55,19 +51,8 @@ public class NextTripController extends Fragment implements IStopLocationHandler
 
         locHandler = this;
 
-        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() >= 3) {
-                    JourneyPlannerFactory.getJourneyPlanner().getStopLocationByName(locHandler, s.toString());
-                    // Could implement something here to wait 0,75s~ between requests to reduce amount of requests
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
+        setupTextListener();
+        setupSearchClickListener();
 
         // testing coordinate function
         JourneyPlannerFactory.getJourneyPlanner().getStopLocationByCoordinate(locHandler,null);
@@ -107,5 +92,29 @@ public class NextTripController extends Fragment implements IStopLocationHandler
         activity.inflateDepartureDisplay(Screen.DEPARTURE_DISPLAY, selectedLocation);
     }
 
+    private void setupTextListener() {
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() >= 3) {
+                    JourneyPlannerFactory.getJourneyPlanner().getStopLocationByName(locHandler, s.toString());
+                    // Could implement something here to wait 0,75s~ between requests to reduce amount of requests
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+    }
 
+    private void setupSearchClickListener() {
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                StopLocation stop = (StopLocation) parent.getItemAtPosition(pos);
+                proceedToDepartureDisplay(stop);
+            }
+        });
+    }
 }
