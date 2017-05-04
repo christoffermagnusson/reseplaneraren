@@ -29,11 +29,11 @@ public class DummyJourneyPlanner implements IJourneyPlannerData {
         stopListByCoordinate.add(new StopLocation("Teknikgatan",6));
 
 
-        depList.add(new Departure("60","Masthugget"));
-        depList.add(new Departure("62","Skår"));
-        depList.add(new Departure("11","Saltholmen"));
-        depList.add(new Departure("6","Länsmansgården"));
-        depList.add(new Departure("6","Angered"));
+        depList.add(new Departure("60","Masthugget", "BUS", "C", new String[]{"11:18", "11:28", "11:38", "11:48", "11:58", "12:08"}, "ffffff", "00b6f1", true));
+        depList.add(new Departure("62","Skår", "BUS", "E", new String[]{"11:21", "11:51", "12:21", "12:51", "13:21", "13:51"}, "ffffff", "00b6f1", true));
+        depList.add(new Departure("11","Saltholmen", "TRAM", "B", new String[]{"11:16", "11:21", "11:26", "11:31", "11:36", "11:41"}, "ffffff", "000000", false));
+        depList.add(new Departure("6","Länsmansgården", "TRAM", "C", new String[]{"11:15", "11:20", "11:25", "11:30", "11:35", "11:40"}, "00394d", "fa8719", false));
+        depList.add(new Departure("6","Kortedala", "TRAM", "E", new String[]{"11:17", "11:22", "11:27", "11:32", "11:37", "11:42"}, "0039fd", "fa8719", false));
     }
 
     @Override
