@@ -14,10 +14,12 @@ import android.widget.ListView;
 import com.example.reseplaneraren2.R;
 import com.example.reseplaneraren2.data.interfaces.IDepartureHandler;
 import com.example.reseplaneraren2.data.interfaces.IStopLocationHandler;
+import com.example.reseplaneraren2.data.internal.JourneyPlannerFactory;
 import com.example.reseplaneraren2.model.Departure;
 import com.example.reseplaneraren2.model.StopLocation;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DepartureDisplayController  extends Fragment implements IDepartureHandler{
@@ -27,7 +29,7 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
     private IDepartureHandler depHandler;
 
     private DepartureAdapter depAdapter;
-    private ArrayList<Departure> mDepList;
+    private ArrayList<Departure> mDepList = new ArrayList<Departure>();
     private ListView depListView;
 
     public DepartureDisplayController() {
@@ -40,18 +42,23 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_departure_display_controller, container, false);
 
-        //depListView = (ListView)view.findViewById(R.id.//listname, )
-        mDepList = new ArrayList<Departure>();
+        depListView = (ListView)view.findViewById(R.id.departureListView);
+
         depHandler = this;
 
-        //setupListClickListener();
-        depAdapter = new DepartureAdapter(getContext(),R.layout.fragment_departure_display_controller, mDepList);
 
+
+        //setupListClickListener();
+        depAdapter = new DepartureAdapter(getContext(),R.layout.departure_display_listitem, mDepList);
+
+        depListView.setAdapter(depAdapter);
         return view;
     }
 
     @Override
     public void receiveDeparture(ArrayList<Departure> departureList) {
+        mDepList.clear();
+        mDepList.addAll(departureList);
 
     }
 
@@ -62,6 +69,7 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
 
     public void setStopLocation(StopLocation stopLocation){
         this.stopLocation=stopLocation;
+        JourneyPlannerFactory.getJourneyPlanner().getDepartureBoard(this,stopLocation, Calendar.getInstance());
         Log.d("DepartureDisplay!", stopLocation.toString());
     }
 
