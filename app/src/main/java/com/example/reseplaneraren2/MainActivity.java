@@ -64,13 +64,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         System.out.println("Testing_new_commit");
 
-        saveStartScreen(R.id.navigation_search_trip);
-        UserPrefs.setStartScreen(getStartScreen());
-        Log.d("Startscreen is: "," "+getStartScreen());
 
-        inflate(UserPrefs.startScreen);
 
-        //navigationView.setSelectedItemId(R.id.navigation_ticket);
+
+        navigationView.setSelectedItemId(getStartScreen());
     }
 
     private void saveStartScreen(int screen){

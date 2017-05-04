@@ -11,30 +11,29 @@ import com.example.reseplaneraren2.controllers.ticket.TicketController;
 
 public enum Screen {
 
-    SEARCH_TRIP(new SearchTripController(),1),
-    NEXT_TRIP(new NextTripController(),2),
-    FAVORITES(new FavoritesController(),3),
-    TICKET(new TicketController(),4),
+    SEARCH_TRIP(new SearchTripController()),
+    NEXT_TRIP(new NextTripController()),
+    FAVORITES(new FavoritesController()),
+    TICKET(new TicketController()),
 
-    DEPARTURE_DISPLAY (new DepartureDisplayController(),5),
-    MY_TICKET_DISPLAY (new MyTicketFragment(),6),
+    DEPARTURE_DISPLAY (new DepartureDisplayController()),
+    MY_TICKET_DISPLAY (new MyTicketFragment()),
 
-    DEFAULT(new Fragment(),0); // borde vara den initiala screen
+    DEFAULT(new Fragment()); // borde vara den initiala screen
 
 
 
     private Fragment fragment;
 
-    private int id;
 
-    Screen(Fragment fragment,int id) {
+
+    Screen(Fragment fragment) {
         this.fragment = fragment;
-        this.id =id;
     }
 
     public Fragment getFragment() {
         return fragment;
     }
 
-    public int getId(){ return id; }
+
 }
