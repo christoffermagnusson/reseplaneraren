@@ -58,10 +58,10 @@ public class NextTripController extends Fragment implements IStopLocationHandler
         // testing coordinate function
         JourneyPlannerFactory.getJourneyPlanner().getStopLocationByCoordinate(locHandler,null);
 
-        searchAdapter = new StopLocationAdapter(getContext(), R.layout.next_trip_autocomplete, mStopLocationsBySearch);
+        searchAdapter = new StopLocationAdapter(getContext(), R.layout.simple_list_item, mStopLocationsBySearch);
         autoCompleteTextView.setAdapter(searchAdapter);
 
-        nearbyAdapter = new StopLocationAdapter(getContext(),R.layout.next_trip_autocomplete, mStopLocationsNearby);
+        nearbyAdapter = new StopLocationAdapter(getContext(),R.layout.simple_list_item, mStopLocationsNearby);
         nearbyList.setAdapter(nearbyAdapter);
         ((MainActivity)getActivity()).changeTitle("Nästa tur");
         return v;
