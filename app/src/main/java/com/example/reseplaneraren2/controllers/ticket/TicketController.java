@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
 
 
@@ -23,6 +24,7 @@ public class TicketController extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
+        ((MainActivity)getActivity()).changeTitle("Biljetter");
 
         tabHost = new FragmentTabHost(getActivity());
         tabHost.setup(getActivity(), getChildFragmentManager(), R.layout.ticket_layout);
