@@ -2,6 +2,7 @@ package com.example.reseplaneraren2.controllers.departuredisplay;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class DepartureAdapter extends ArrayAdapter<Departure> {
 
     public Departure getItem(int position){
 
-        return mDepartureList.get(position)
+        return mDepartureList.get(position);
     }
 
     @Override
@@ -45,10 +46,16 @@ public class DepartureAdapter extends ArrayAdapter<Departure> {
                 LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
                 convertView = inflater.inflate(mViewId,viewGroup,false);
 
+                Departure departure = getItem(postion);
                 /*TextView departureName = (TextView)                 // nameField
                 TextView departureDestination = (TextView)          // destinationField
                 TextView departureTime = (TextView) */                // departuresField
+
+                //departureName.setText(departure.getName());
+                //departureDestination.setText(departure.getDestination());
             }
+        } catch(Exception e){
+            Log.d("Error",e.getMessage());
         }
     }
 
