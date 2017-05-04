@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#0096ed</color>
+    <color name="colorPrimaryDark">#0076ba</color>
+    <color name="colorAccent">#f5781e</color>
     <color name="colorVasttrafikBlue">#01aaeb</color>
     <color name="colorVasttrafikOrange">#F6781A</color>
     <color name="colorVasttrafikWhite">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="darker_grey">#606060</color>
+    <color name="primary_material_light_1">#0096ed</color>
+    <color name="primary_dark_material_light">#0076ba</color>
+    <color name="accent_material_light">#f5781e</color>
 </resources>
