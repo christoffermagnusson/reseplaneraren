@@ -18,6 +18,7 @@ import com.example.reseplaneraren2.model.Departure;
 import com.example.reseplaneraren2.model.StopLocation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DepartureDisplayController  extends Fragment implements IDepartureHandler{
 
@@ -39,9 +40,14 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_departure_display_controller, container, false);
 
+        //depListView = (ListView)view.findViewById(R.id.//listname, )
+        mDepList = new ArrayList<Departure>();
+        depHandler = this;
 
+        //setupListClickListener();
+        depAdapter = new DepartureAdapter(getContext(),R.layout.fragment_departure_display_controller, mDepList);
 
-
+        return view;
     }
 
     @Override

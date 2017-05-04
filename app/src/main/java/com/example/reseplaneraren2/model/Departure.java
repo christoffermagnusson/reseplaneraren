@@ -27,6 +27,34 @@ public class Departure {
         this.accessibility = accessibility;
     }
 
+    public String getName(){
+        return this.name;
+    }
+
+    public String getDestination(){
+        return this.destination;
+    }
+
+    public String getType(){
+        return this.type;
+    }
+
+    public String getTrack(){
+        return this.track;
+    }
+
+    public String[] getDepartureTimes(){
+        return this.departureTimes;
+    }
+
+    public String getBgColor(){
+        return this.bgColor;
+    }
+
+    public String getFgColor(){
+        return this.fgColor;
+    }
+
 
 
 }
