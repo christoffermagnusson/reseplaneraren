@@ -66,10 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        // Hämtar in den lagrade startsidan i appen
         navigationView.setSelectedItemId(getStartScreen());
     }
 
+    // denna metod ska kopplas till någon form av menyval , inställningar eller liknande som ställer in ny startsida
     private void saveStartScreen(int screen){
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
