@@ -69,7 +69,7 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
 
     public void setStopLocation(StopLocation stopLocation){
         this.stopLocation=stopLocation;
-        JourneyPlannerFactory.getJourneyPlanner().getDepartureBoard(this,stopLocation, Calendar.getInstance());
+        JourneyPlannerFactory.getJourneyPlanner().getDepartureBoard(this, stopLocation, Calendar.getInstance());
         Log.d("DepartureDisplay!", stopLocation.toString());
     }
 
