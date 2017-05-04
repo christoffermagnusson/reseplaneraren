@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -100,5 +101,23 @@ public class MainActivity extends AppCompatActivity {
         DepartureDisplayController controller = (DepartureDisplayController) screenToDisplay.getFragment();
         controller.setStopLocation(stopLocation);
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings: {
+                Log.d("Sammitest", "Kom hit iaf");
+                break;
+            }
+
+        }
+        return false;
     }
 }
