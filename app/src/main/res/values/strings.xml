@@ -5,6 +5,8 @@
     <string name="next_trip">Nästa tur</string>
     <string name="ticket">Biljetter</string>
 
+    <string name="start_screen">Startskärm</string>
+
     <string name="layout_nextTrip_searchLabel">Sök hållplats</string>
     <string name="layout_nextTrip_nearbyStopsLabel">Närliggande hållplatser</string>
 

@@ -1,5 +1,7 @@
 package com.example.reseplaneraren2;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -60,6 +62,28 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         System.out.println("Testing_new_commit");
+
+        saveStartScreen(R.id.navigation_search_trip);
+        UserPrefs.setStartScreen(getStartScreen());
+        Log.d("Startscreen is: "," "+getStartScreen());
+
+        inflate(UserPrefs.startScreen);
+
+        //navigationView.setSelectedItemId(R.id.navigation_ticket);
+    }
+
+    private void saveStartScreen(int screen){
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(getString(R.string.start_screen), screen);
+        editor.commit();
+    }
+
+    private int getStartScreen(){
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        int screen = sharedPref.getInt(getString(R.string.start_screen),0);
+
+        return screen;
     }
 
     public void inflate(Screen screenToDisplay){
