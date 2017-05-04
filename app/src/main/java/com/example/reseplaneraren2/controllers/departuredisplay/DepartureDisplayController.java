@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.reseplaneraren2.R;
 import com.example.reseplaneraren2.data.interfaces.IDepartureHandler;
@@ -22,6 +23,12 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
 
     private StopLocation stopLocation = null;
 
+    private IDepartureHandler depHandler;
+
+    private DepartureAdapter depAdapter;
+    private ArrayList<Departure> mDepList;
+    private ListView depListView;
+
     public DepartureDisplayController() {
         // Required empty public constructor
     }
@@ -30,7 +37,11 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_departure_display_controller, container, false);
+        View view = inflater.inflate(R.layout.fragment_departure_display_controller, container, false);
+
+
+
+
     }
 
     @Override
