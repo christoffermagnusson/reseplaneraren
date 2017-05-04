@@ -2,6 +2,7 @@ package com.example.reseplaneraren2.controllers.departuredisplay;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,10 @@ public class DepartureAdapter extends ArrayAdapter<Departure> {
                 departureTime_2.setText(departure.getDepartureTimes()[1]);
                 departureTime_3.setText(departure.getDepartureTimes()[2]);
                 departureTime_4.setText(departure.getDepartureTimes()[3]);
-                departureTrack.setText(departure.getTrack());
+                departureTrack.setText("Läge " + departure.getTrack());
+
+                departureName.setBackgroundColor(Color.parseColor(departure.getFgColor()));
+                departureName.setTextColor(Color.parseColor(departure.getBgColor()));
 
 
             }

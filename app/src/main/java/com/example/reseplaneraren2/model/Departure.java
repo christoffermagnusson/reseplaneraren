@@ -19,6 +19,7 @@ public class Departure {
 
     public Departure(String name, String destination, String type, String track, String[] departureTimes, String bgColor, String fgColor, boolean accessibility){
         this.name=name;
+        this.destination = destination;
         this.type=type;
         this.track = track;
         this.departureTimes = departureTimes;
