@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
 
 /**
@@ -16,8 +17,10 @@ public class FavoritesController extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        return inflater.inflate(R.layout.favorites_layout, container, false);
 
+        View v = inflater.inflate(R.layout.favorites_layout, container, false);
+        ((MainActivity)getActivity()).changeTitle("Favoriter");
+        return v;
     }
 
 }

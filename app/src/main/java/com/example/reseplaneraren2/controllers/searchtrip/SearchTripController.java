@@ -10,6 +10,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
 
 public class SearchTripController extends Fragment {
@@ -26,7 +27,7 @@ public class SearchTripController extends Fragment {
         nearbyStopsList = (ListView) view.findViewById(R.id.nearbyStopsList);
         changeTimeSpinner = (Spinner) view.findViewById(R.id.changeTimeSpinner);
         fillChangeTimeSpinner();
-
+        ((MainActivity)getActivity()).changeTitle("Sök resa");
         return view;
     }
 

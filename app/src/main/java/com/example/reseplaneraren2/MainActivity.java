@@ -10,9 +10,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.reseplaneraren2.controllers.departuredisplay.DepartureDisplayController;
 import com.example.reseplaneraren2.model.StopLocation;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +44,11 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
+    public void changeTitle(String newTitle){
+    Toolbar mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        TextView mTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        mTitle.setText(newTitle);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         System.out.println("Testing_new_commit");
     }
 

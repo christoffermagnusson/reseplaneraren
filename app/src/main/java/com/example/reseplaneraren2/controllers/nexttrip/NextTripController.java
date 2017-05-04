@@ -63,7 +63,7 @@ public class NextTripController extends Fragment implements IStopLocationHandler
 
         nearbyAdapter = new StopLocationAdapter(getContext(),R.layout.next_trip_autocomplete, mStopLocationsNearby);
         nearbyList.setAdapter(nearbyAdapter);
-
+        ((MainActivity)getActivity()).changeTitle("Nästa tur");
         return v;
     }
 
