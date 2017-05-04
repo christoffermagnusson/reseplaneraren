@@ -30,8 +30,10 @@ public class DummyJourneyPlanner implements IJourneyPlannerData {
 
 
         depList.add(new Departure("60","Masthugget"));
+        depList.add(new Departure("62","Skår"));
         depList.add(new Departure("11","Saltholmen"));
         depList.add(new Departure("6","Länsmansgården"));
+        depList.add(new Departure("6","Angered"));
     }
 
     @Override
