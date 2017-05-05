@@ -120,12 +120,13 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.settings:
                 Log.d("Sammitest", "Kom hit iaf");
+                return true;
             case R.id.change_homepage:
                 saveStartScreen(currentScreen);
                 TextView title = (TextView)myToolbar.findViewById(R.id.toolbar_title);
                 String titleStr = title.getText().toString()+" satt som startsida";
                 Toast.makeText(this,titleStr,Toast.LENGTH_LONG).show();
-
+                return true;
 
         }
         return false;
