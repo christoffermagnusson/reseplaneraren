@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.reseplaneraren2.controllers.departuredisplay.DepartureDisplayController;
 import com.example.reseplaneraren2.model.StopLocation;
@@ -23,6 +24,7 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView navigationView;
+    private Toolbar myToolbar;
 
     public static int currentScreen;  // to use when setting the start page
 
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView = (BottomNavigationView) findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         System.out.println("Testing_new_commit");
@@ -116,11 +118,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.settings: {
+            case R.id.settings:
                 Log.d("Sammitest", "Kom hit iaf");
-                break;
+            case R.id.change_homepage:
+                saveStartScreen(currentScreen);
+                TextView title = (TextView)myToolbar.findViewById(R.id.toolbar_title);
+                String titleStr = title.getText().toString()+" satt som startsida";
+                Toast.makeText(this,titleStr,Toast.LENGTH_LONG).show();
 
-            }
 
         }
         return false;
