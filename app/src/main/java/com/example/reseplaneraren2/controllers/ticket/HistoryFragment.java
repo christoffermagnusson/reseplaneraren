@@ -35,9 +35,9 @@ public class HistoryFragment extends Fragment {
     public void onStart(){
         super.onStart();
 
-        historyDummy1 = "Göteborg \nVUXEN\n14:15-17:14 10 apr               29kr";
+        historyDummy1 = "Göteborg \nVUXEN\n14:15-17:14 10 jun               29kr";
         historyDummy2 = "Göteborg \nVUXEN\n11:00-22:14 8 maj                49kr";
-        historyDummy3 = "Göteborg \nVUXEN\n08:55-09:55 29 jun               29kr";
+        historyDummy3 = "Göteborg \nVUXEN\n08:55-09:55 29 apr               29kr";
 
         history = new ArrayList<String>();
         history.addAll(Arrays.asList(new String[]{historyDummy1, historyDummy2, historyDummy3}));
