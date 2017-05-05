@@ -1,5 +1,6 @@
 package com.example.reseplaneraren2.controllers.nexttrip;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
 import com.example.reseplaneraren2.Screen;
+import com.example.reseplaneraren2.Util.Utils;
 import com.example.reseplaneraren2.data.interfaces.IStopLocationHandler;
 import com.example.reseplaneraren2.data.internal.JourneyPlannerFactory;
 import com.example.reseplaneraren2.model.StopLocation;
@@ -110,11 +112,12 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     }
 
     private void setupSearchClickListener() {
-
+        final MainActivity activity = (MainActivity) this.getActivity();
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                 StopLocation stop = (StopLocation) parent.getItemAtPosition(pos);
+                Utils.hideKeyboard(activity);
                 proceedToDepartureDisplay(stop);
             }
         });
