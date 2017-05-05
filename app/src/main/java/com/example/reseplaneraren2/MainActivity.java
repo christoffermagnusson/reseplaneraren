@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView navigationView;
 
+    public static int currentScreen;  // to use when setting the start page
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -32,15 +34,19 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_search_trip:
                     inflate(Screen.SEARCH_TRIP);
+                    currentScreen=R.id.navigation_search_trip;
                     return true;
                 case R.id.navigation_next_trip:
                     inflate(Screen.NEXT_TRIP);
+                    currentScreen=R.id.navigation_next_trip;
                     return true;
                 case R.id.navigation_favorites:
                     inflate(Screen.FAVORITES);
+                    currentScreen=R.id.navigation_favorites;
                     return true;
                 case R.id.navigation_ticket:
                     inflate(Screen.TICKET);
+                    currentScreen=R.id.navigation_ticket;
                     return true;
             }
             return false;
@@ -113,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings: {
                 Log.d("Sammitest", "Kom hit iaf");
                 break;
+
             }
 
         }
