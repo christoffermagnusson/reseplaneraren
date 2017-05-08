@@ -29,7 +29,7 @@ public class InitialSetupController extends Fragment {
         fillListWithScreens();
         possibleScreensListView = (ListView) view.findViewById(R.id.initialSetupList);
 
-        adapter = new InitialSetupAdapter(getContext(),R.layout.simple_list_item,possibleScreens);
+        adapter = new InitialSetupAdapter(getContext(),R.layout.initial_setup_listitem,possibleScreens);
         possibleScreensListView.setAdapter(adapter);
 
 
