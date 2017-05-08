@@ -1,5 +1,6 @@
 package com.example.reseplaneraren2.controllers.nexttrip;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,8 +16,9 @@ import android.widget.ListView;
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
 import com.example.reseplaneraren2.Screen;
-import com.example.reseplaneraren2.data.interfaces.IStopLocationHandler;
-import com.example.reseplaneraren2.data.internal.JourneyPlannerFactory;
+import com.example.reseplaneraren2.Util.Utils;
+import com.example.reseplaneraren2.data.interfaces.IJourneyPlannerData;
+import com.example.reseplaneraren2.data.interfaces.UIStopLocationHandler;
 import com.example.reseplaneraren2.model.StopLocation;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
  */
 
 
-public class NextTripController extends Fragment implements IStopLocationHandler {
+public class NextTripController extends Fragment implements UIStopLocationHandler {
 
     private ArrayList<StopLocation> mStopLocationsBySearch;
     AutoCompleteTextView autoCompleteTextView;
