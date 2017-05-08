@@ -1,9 +1,10 @@
 
 package com.example.reseplaneraren2.controllers.departuredisplay;
 
+import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,47 +12,58 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
-import com.example.reseplaneraren2.data.interfaces.IDepartureHandler;
-import com.example.reseplaneraren2.data.interfaces.IStopLocationHandler;
+import com.example.reseplaneraren2.data.interfaces.IJourneyPlannerData;
+import com.example.reseplaneraren2.data.interfaces.UIDepartureBoardHandler;
+import com.example.reseplaneraren2.data.internal.APIJourneyPlanner;
 import com.example.reseplaneraren2.data.internal.JourneyPlannerFactory;
 import com.example.reseplaneraren2.model.Departure;
 import com.example.reseplaneraren2.model.StopLocation;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Random;
 
-public class DepartureDisplayController  extends Fragment implements IDepartureHandler{
+public class DepartureBoardDisplayController extends Fragment implements UIDepartureBoardHandler {
 
     private StopLocation stopLocation = null;
 
-    private IDepartureHandler depHandler;
+    private IJourneyPlannerData journeyPlanner;
+
+    private UIDepartureBoardHandler depHandler;
 
     private DepartureAdapter depAdapter;
     private ArrayList<Departure> mDepList = new ArrayList<Departure>();
     private ListView depListView;
 
-    public DepartureDisplayController() {
-        // Required empty public constructor
+    private MainActivity mParent;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mParent = (MainActivity) context;
+        } catch (final ClassCastException e) {
+            e.printStackTrace();
+        }
+
+        journeyPlanner = mParent.getJourneyPlanner();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_departure_display_controller, container, false);
 
         depListView = (ListView)view.findViewById(R.id.departureListView);
-
         depHandler = this;
-
-
-
-        //setupListClickListener();
         depAdapter = new DepartureAdapter(getContext(),R.layout.departure_display_listitem, mDepList);
-
         depListView.setAdapter(depAdapter);
+
+        journeyPlanner.getDepartureBoard(this, Calendar.getInstance(), stopLocation);
+
         return view;
     }
 
@@ -59,7 +71,7 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
     public void receiveDeparture(ArrayList<Departure> departureList) {
         mDepList.clear();
         mDepList.addAll(departureList);
-
+        depAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -69,8 +81,6 @@ public class DepartureDisplayController  extends Fragment implements IDepartureH
 
     public void setStopLocation(StopLocation stopLocation){
         this.stopLocation=stopLocation;
-        JourneyPlannerFactory.getJourneyPlanner().getDepartureBoard(this, stopLocation, Calendar.getInstance());
-        Log.d("DepartureDisplay!", stopLocation.toString());
     }
 
 }

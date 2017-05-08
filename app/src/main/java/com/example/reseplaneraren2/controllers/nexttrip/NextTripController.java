@@ -1,6 +1,5 @@
 package com.example.reseplaneraren2.controllers.nexttrip;
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,7 +15,6 @@ import android.widget.ListView;
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
 import com.example.reseplaneraren2.Screen;
-import com.example.reseplaneraren2.Util.Utils;
 import com.example.reseplaneraren2.data.interfaces.IStopLocationHandler;
 import com.example.reseplaneraren2.data.internal.JourneyPlannerFactory;
 import com.example.reseplaneraren2.model.StopLocation;
@@ -38,7 +36,23 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     private StopLocationAdapter nearbyAdapter;
     private ListView nearbyList;
 
-    private IStopLocationHandler locHandler;
+    private UIStopLocationHandler locHandler;
+
+    private MainActivity mParent;
+    private IJourneyPlannerData journeyPlanner;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mParent = (MainActivity) context;
+        } catch (final ClassCastException e) {
+            e.printStackTrace();
+        }
+
+        journeyPlanner = mParent.getJourneyPlanner();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -58,7 +72,7 @@ public class NextTripController extends Fragment implements IStopLocationHandler
         setupListClickListener();
 
         // testing coordinate function
-        JourneyPlannerFactory.getJourneyPlanner().getStopLocationByCoordinate(locHandler,null);
+        //JourneyPlannerFactory.getJourneyPlanner().getStopLocationByCoordinate(locHandler,null);
 
         searchAdapter = new StopLocationAdapter(getContext(), R.layout.simple_list_item, mStopLocationsBySearch);
         autoCompleteTextView.setAdapter(searchAdapter);
@@ -70,10 +84,10 @@ public class NextTripController extends Fragment implements IStopLocationHandler
     }
 
     @Override
-    public void receiveStopLocationBySearch(ArrayList<StopLocation> stopLocList) {
-        Log.d("dunkDEBUG", "Received stuff");
+    public void receiveStopLocationByName(ArrayList<StopLocation> stopLocList) {
         mStopLocationsBySearch.clear();
         mStopLocationsBySearch.addAll(stopLocList);
+        searchAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -102,7 +116,7 @@ public class NextTripController extends Fragment implements IStopLocationHandler
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() >= 3) {
-                    JourneyPlannerFactory.getJourneyPlanner().getStopLocationByName(locHandler, s.toString());
+                    journeyPlanner.getStopLocationByName(locHandler, s.toString());
                     // Could implement something here to wait 0,75s~ between requests to reduce amount of requests
                 }
             }

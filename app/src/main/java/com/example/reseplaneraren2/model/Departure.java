@@ -13,19 +13,30 @@ public class Departure {
     private String type;
     private String track;
     private String[] departureTimes;
+    private String realTime;
     private String bgColor;
     private String fgColor;
-    private boolean accessibility;
+    private String accessibility;
 
-    public Departure(String name, String destination, String type, String track, String[] departureTimes, String bgColor, String fgColor, boolean accessibility){
+    public Departure(String name, String destination, String type, String[] departureTimes, String bgColor, String fgColor){
         this.name=name;
         this.destination = destination;
         this.type=type;
-        this.track = track;
         this.departureTimes = departureTimes;
         this.bgColor = bgColor;
         this.fgColor = fgColor;
+    }
+
+    public void setTrack(String track) {
+        this.track = track;
+    }
+
+    public void setAccessibility(String accessibility) {
         this.accessibility = accessibility;
+    }
+
+    public void setRealTime(String realTime) {
+        this.realTime = realTime;
     }
 
     public String getName(){

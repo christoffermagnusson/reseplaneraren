@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by christoffer on 2017-05-03.
  */
 
-public interface IDepartureHandler {
+public interface UIDepartureBoardHandler {
 
         public void receiveDeparture(ArrayList<Departure> departureList);
 

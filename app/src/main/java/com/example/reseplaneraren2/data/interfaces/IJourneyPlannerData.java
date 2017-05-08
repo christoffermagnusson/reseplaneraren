@@ -10,9 +10,7 @@ import java.util.Calendar;
 
 public interface IJourneyPlannerData {
 
-    public void getStopLocationByName(IStopLocationHandler handler, String request);
+    public void getStopLocationByName(UIStopLocationHandler handler, String request);
 
-    public void getStopLocationByCoordinate(IStopLocationHandler handler, String request);
-
-    public void getDepartureBoard(IDepartureHandler handler, StopLocation location, Calendar calendar);
+    public void getDepartureBoard(UIDepartureBoardHandler handler, Calendar calendar, StopLocation location);
 }

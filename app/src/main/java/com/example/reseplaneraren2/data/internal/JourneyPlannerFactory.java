@@ -1,5 +1,7 @@
 package com.example.reseplaneraren2.data.internal;
 
+import android.content.Context;
+
 import com.example.reseplaneraren2.data.interfaces.IJourneyPlannerData;
 
 /**
@@ -8,7 +10,7 @@ import com.example.reseplaneraren2.data.interfaces.IJourneyPlannerData;
 
 public class JourneyPlannerFactory {
 
-    public static IJourneyPlannerData getJourneyPlanner(){
-            return new DummyJourneyPlanner();
+    public static IJourneyPlannerData getJourneyPlanner(Context context, String identifier){
+            return APIJourneyPlanner.getInstance(context, identifier);
     }
 }

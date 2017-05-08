@@ -7,10 +7,10 @@ package com.example.reseplaneraren2.model;
 public class StopLocation {
 
     public String name;
-    private int stopId;
+    private String stopId;
 
 
-    public StopLocation(String name,int stopId){
+    public StopLocation(String name,String stopId){
             this.name = name;
             this.stopId = stopId;
     }
@@ -18,5 +18,13 @@ public class StopLocation {
     @Override
     public String toString(){
         return this.name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getStopId() {
+        return stopId;
     }
 }

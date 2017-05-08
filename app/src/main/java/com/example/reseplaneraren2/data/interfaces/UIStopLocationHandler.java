@@ -8,9 +8,9 @@ import java.util.ArrayList;
  * Created by christoffer on 2017-05-03.
  */
 
-public interface IStopLocationHandler {
+public interface UIStopLocationHandler {
 
-    public void receiveStopLocationBySearch(ArrayList<StopLocation> stopLocList);
+    public void receiveStopLocationByName(ArrayList<StopLocation> stopLocList);
 
     public void receiveStopLocationByCoordinate(ArrayList<StopLocation> stopLocList);
 

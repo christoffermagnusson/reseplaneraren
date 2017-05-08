@@ -2,7 +2,7 @@ package com.example.reseplaneraren2;
 
 import android.support.v4.app.Fragment;
 
-import com.example.reseplaneraren2.controllers.departuredisplay.DepartureDisplayController;
+import com.example.reseplaneraren2.controllers.departuredisplay.DepartureBoardDisplayController;
 import com.example.reseplaneraren2.controllers.favorites.FavoritesController;
 import com.example.reseplaneraren2.controllers.nexttrip.NextTripController;
 import com.example.reseplaneraren2.controllers.searchtrip.SearchTripController;
@@ -16,7 +16,7 @@ public enum Screen {
     FAVORITES(new FavoritesController()),
     TICKET(new TicketController()),
 
-    DEPARTURE_DISPLAY (new DepartureDisplayController()),
+    DEPARTURE_DISPLAY (new DepartureBoardDisplayController()),
     MY_TICKET_DISPLAY (new MyTicketFragment()),
 
     DEFAULT(new Fragment()); // borde vara den initiala screen
