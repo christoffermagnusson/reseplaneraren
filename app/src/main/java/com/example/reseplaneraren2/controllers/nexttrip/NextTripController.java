@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
 
     private MainActivity mParent;
     private IJourneyPlannerData journeyPlanner;
+    private long lastSearchTime;
 
     @Override
     public void onAttach(Context context) {
@@ -117,8 +119,16 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() >= 3) {
-                    journeyPlanner.getStopLocationByName(locHandler, s.toString());
-                    // Could implement something here to wait 0,75s~ between requests to reduce amount of requests
+                    long currentTime = System.nanoTime();
+                    long elapsed = currentTime - lastSearchTime;
+
+                    if (elapsed >= 750000000) {
+                        journeyPlanner.getStopLocationByName(locHandler, s.toString());
+                        lastSearchTime = System.nanoTime();
+                        Log.d("dunkDEBUG", "Approved search for location!");
+                    } else {
+                        Log.d("dunkDEBUG", "Denied search for location!");
+                    }
                 }
             }
             @Override
