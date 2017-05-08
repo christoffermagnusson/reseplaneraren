@@ -13,14 +13,12 @@ import android.widget.TextView;
 import com.example.reseplaneraren2.R;
 import com.example.reseplaneraren2.model.Departure;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-/**
- * Created by christoffer on 2017-05-04.
- */
-
-
+import java.util.concurrent.TimeUnit;
 
 public class DepartureAdapter extends ArrayAdapter<Departure> {
 
@@ -68,7 +66,18 @@ public class DepartureAdapter extends ArrayAdapter<Departure> {
 
             List<String> timeValues = departure.getDepartureTimes(); // Departure-object is limited to max 4 departure times
             for (int i = 0; i < timeValues.size(); i++) {
-                timeFields.get(i).setText(timeValues.get(i));
+                TextView timeField = timeFields.get(i);
+                timeField.setText(timeValues.get(i));
+                if (i == 0 && departure.getRealTime() != null) {
+                    long diff = getTimeDifference(timeValues.get(i), departure.getRealTime());
+                    if (diff != 0) {
+                        if (diff < 0)
+                            timeField.append(" " + diff);
+                        else {
+                            timeField.append(" +" + diff);
+                        }
+                    }
+                }
             }
         } catch(Exception e){
             Log.d("Error",e.getMessage());
@@ -76,4 +85,15 @@ public class DepartureAdapter extends ArrayAdapter<Departure> {
         return convertView;
     }
 
+    private long getTimeDifference(String origin, String realTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        Date d1 = null; Date d2 = null;
+        try {
+            d1 = sdf.parse(origin);
+            d2 = sdf.parse(realTime);
+        } catch (ParseException pe) {
+            Log.d(getClass().toString(), "Could not parse date");
+        }
+        return TimeUnit.MILLISECONDS.toMinutes((d2.getTime() - d1.getTime()));
+    }
 }

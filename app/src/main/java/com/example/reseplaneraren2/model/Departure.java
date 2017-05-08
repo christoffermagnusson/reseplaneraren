@@ -68,6 +68,10 @@ public class Departure {
         return this.departureTimes;
     }
 
+    public String getRealTime() {
+        return realTime;
+    }
+
     public String getBgColor(){
         return this.bgColor;
     }
