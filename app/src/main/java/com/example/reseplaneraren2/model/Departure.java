@@ -2,6 +2,9 @@ package com.example.reseplaneraren2.model;
 
 import android.graphics.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by christoffer on 2017-05-02.
  */
@@ -12,17 +15,17 @@ public class Departure {
     private String destination;
     private String type;
     private String track;
-    private String[] departureTimes;
+    private List<String> departureTimes = new ArrayList<>();
     private String realTime;
     private String bgColor;
     private String fgColor;
     private String accessibility;
 
-    public Departure(String name, String destination, String type, String[] departureTimes, String bgColor, String fgColor){
+    public Departure(String name, String destination, String type, String departureTime, String bgColor, String fgColor){
         this.name=name;
         this.destination = destination;
         this.type=type;
-        this.departureTimes = departureTimes;
+        this.departureTimes.add(departureTime);
         this.bgColor = bgColor;
         this.fgColor = fgColor;
     }
@@ -37,6 +40,12 @@ public class Departure {
 
     public void setRealTime(String realTime) {
         this.realTime = realTime;
+    }
+
+    public void addDepartureTime(String departureTime) {
+        if (departureTimes.size() < 4) {
+            this.departureTimes.add(departureTime);
+        }
     }
 
     public String getName(){
@@ -55,7 +64,7 @@ public class Departure {
         return this.track;
     }
 
-    public String[] getDepartureTimes(){
+    public List<String> getDepartureTimes(){
         return this.departureTimes;
     }
 
@@ -67,6 +76,21 @@ public class Departure {
         return this.fgColor;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Departure departure = (Departure) o;
 
+        if (!name.equals(departure.name)) return false;
+        return destination.equals(departure.destination);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + destination.hashCode();
+        return result;
+    }
 }

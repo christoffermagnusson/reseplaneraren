@@ -24,8 +24,11 @@ public class DepartureBoardRequest {
     private String baseUrl = "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard";
     private String format = "json";
 
+    private String timeSpan = "90";
+    private String maxDepartures = "4";
+
     void send(final UIDepartureBoardHandler handler, final String id, final String date, final String time, final RequestQueue queue, final String accessToken) {
-        baseUrl += "?id=" + id + "&date=" + date + "&time=" + time + "&format=" + format;
+        baseUrl += "?id=" + id + "&date=" + date + "&time=" + time + "&timeSpan=" + timeSpan + "&maxDeparturesPerLine=" + maxDepartures + "&format=" + format;
         StringRequest stopReq = new StringRequest(Request.Method.GET, baseUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -58,27 +61,33 @@ public class DepartureBoardRequest {
             for (int i = 0; i < stopLocArray.length(); i++) {
                 JSONObject depJson = (JSONObject) stopLocArray.getJSONObject(i);
                 Departure departure = new Departure(
-                        (String)depJson.get("sname"),
-                        (String)depJson.get("direction"),
-                        (String)depJson.get("type"),
-                        new String[]{ (String)depJson.get("time")},
-                        (String)depJson.get("bgColor"),
-                        (String)depJson.get("fgColor"));
+                        (String) depJson.get("sname"),
+                        (String) depJson.get("direction"),
+                        (String) depJson.get("type"),
+                        (String) depJson.get("time"),
+                        (String) depJson.get("bgColor"),
+                        (String) depJson.get("fgColor"));
 
-                /* Optional fields */
-                if (depJson.has("track")) {
-                    departure.setTrack((String)depJson.get("track"));
+                /* New departure, or should we only add time to existing one */
+                if (departureArrayList.contains(departure)) {
+                    int index = departureArrayList.indexOf(departure);
+                    Departure depToUpdate = departureArrayList.get(index);
+                    depToUpdate.addDepartureTime(departure.getDepartureTimes().get(0));
+                } else {
+                    /* Optional fields */
+                    if (depJson.has("track")) {
+                        departure.setTrack((String) depJson.get("track"));
+                    }
+                    if (depJson.has("rtTime")) {
+                        departure.setRealTime((String) depJson.get("rtTime"));
+                    }
+                    if (depJson.has("accessibility")) {
+                        departure.setAccessibility((String) depJson.get("accessibility"));
+                    }
+                    departureArrayList.add(departure);
                 }
-                if (depJson.has("rtTime")) {
-                    departure.setRealTime((String)depJson.get("rtTime"));
-                }
-                if (depJson.has("accessibility")) {
-                    departure.setAccessibility((String)depJson.get("accessibility"));
-                }
-                departureArrayList.add(departure);
+                handler.receiveDeparture(departureArrayList);
             }
-            handler.receiveDeparture(departureArrayList);
-
         } catch(JSONException je) {
             je.printStackTrace();
         }
