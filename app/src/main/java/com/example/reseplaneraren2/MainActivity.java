@@ -80,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Hämtar in den lagrade startsidan i appen
-        navigationView.setSelectedItemId(getStartScreen());
+        //navigationView.setSelectedItemId(getStartScreen());
+
+        inflate(Screen.INITIAL_SETUP);
     }
 
     // denna metod ska kopplas till någon form av menyval , inställningar eller liknande som ställer in ny startsida
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         return screen;
     }
+
 
     public void inflate(Screen screenToDisplay){
         FragmentManager manager = getSupportFragmentManager();
