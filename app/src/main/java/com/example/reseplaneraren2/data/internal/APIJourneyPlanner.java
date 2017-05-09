@@ -1,14 +1,10 @@
 package com.example.reseplaneraren2.data.internal;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.reseplaneraren2.data.interfaces.IJourneyPlannerData;
 import com.example.reseplaneraren2.data.interfaces.UIDepartureBoardHandler;
@@ -17,28 +13,34 @@ import com.example.reseplaneraren2.data.internal.util.DateHelper;
 import com.example.reseplaneraren2.model.StopLocation;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 public class APIJourneyPlanner implements IJourneyPlannerData {
 
     // Do NOT forget to check about closing requests. Should tag them and cancel all at some point...
     private static APIJourneyPlanner instance;
     private RequestQueue queue;
-    private String accessToken; // Always check that this is not null before performing any GET requests...If possible maybe also check that it's valid, or revoke it on onPause
+    private String identifier;
+
+    private String accessToken;
+    private Calendar expirationTime;
 
     private APIJourneyPlanner(Context context, String identifier) {
         this.queue = Volley.newRequestQueue(context); // Should be setup with application context, not activity context (otherwise will be destroyed when activity is destroyed)
-        authenticate(identifier);
+        this.identifier = identifier;
+        authenticate();
     }
 
-    private void authenticate(String identifier) {
+    private void authenticate() {
         APIAuthenticationRequest authReq = new APIAuthenticationRequest();
         authReq.send(identifier, queue, new APIAuthenticationRequest.APIAuthenticationListener() {
             @Override
-            public void receiveAccessToken(String token) {
+            public void receiveAccessToken(String token, Calendar expiryTime) {
                 accessToken = token;
-                // Log time here??
+                expirationTime = expiryTime;
+            }
+            @Override
+            public void receiveError(String error) {
+                // Inform user interface?
             }
         });
     }
@@ -53,17 +55,27 @@ public class APIJourneyPlanner implements IJourneyPlannerData {
         return instance;
     }
 
-    public void getStopLocationByName(UIStopLocationHandler handler, String input) {
+    public void getStopLocationByName(final UIStopLocationHandler handler, final String input) {
         if (handler == null) throw new NullPointerException("UIStopLocationHandler handler cannot be null");
         if (input == null) throw new NullPointerException("Argument input cannot be null");
         if (input.trim().isEmpty()) throw new IllegalArgumentException("Argument input must be longer than 0");
 
-        if (accessToken != null) { // This is quite bad...some kind of state for the "client" of this method to check if ready?
+        if (accessToken != null && expirationTime != null &&
+                (Calendar.getInstance().compareTo(expirationTime) < 0)) {
             new StopLocationByNameRequest().send(handler, input, queue, accessToken);
+        } else {
+            authenticate();
+            Log.d(getClass().toString(), "Missing or expired access token. Re-authenticating.");
+            new Handler().postDelayed(new Runnable() { // I think this is really bad, but will probably work for this prototype. Same goes for other get-methods in this class.
+                @Override
+                public void run() {
+                    getStopLocationByName(handler, input);
+                }
+            }, 2000);
         }
     }
 
-    public void getDepartureBoard(UIDepartureBoardHandler handler, Calendar time, StopLocation stop) {
+    public void getDepartureBoard(final UIDepartureBoardHandler handler, final Calendar time, final StopLocation stop) {
         if (handler == null) throw new NullPointerException("UIDepartureBoardHandler handler cannot be null");
         if (time == null) throw new NullPointerException("Argument time cannot be null");
         if (stop == null) throw new NullPointerException("Argument stop cannot be null");
@@ -72,8 +84,18 @@ public class APIJourneyPlanner implements IJourneyPlannerData {
         String d = DateHelper.getDate(time);
         String t = DateHelper.getTime(time);
 
-        if (accessToken != null) {
+        if (accessToken != null && expirationTime != null &&
+                (Calendar.getInstance().compareTo(expirationTime) < 0)) {
             new DepartureBoardRequest().send(handler, stop.getStopId(), d, t, queue, accessToken);
+        } else {
+            authenticate();
+            Log.d(getClass().toString(), "Missing or expired access token. Re-authenticating.");
+            new Handler().postDelayed(new Runnable() { // I think this is really bad, but will probably work for this prototype. Same goes for other get-methods in this class.
+                @Override
+                public void run() {
+                    getDepartureBoard(handler, time, stop);
+                }
+            }, 2000);
         }
     }
 }

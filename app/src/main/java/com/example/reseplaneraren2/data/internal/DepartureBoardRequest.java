@@ -88,6 +88,7 @@ public class DepartureBoardRequest {
                 }
             }
             handler.receiveDeparture(departureArrayList);
+            Log.d(getClass().toString(), "Successfully fetched " + departureArrayList.size() + " Departure-objects.");
         } catch(JSONException je) {
             je.printStackTrace();
         }

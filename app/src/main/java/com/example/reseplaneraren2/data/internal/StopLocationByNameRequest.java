@@ -67,7 +67,7 @@ public class StopLocationByNameRequest {
                 stopArrayList.add(stop);
             }
             handler.receiveStopLocationByName(stopArrayList);
-
+            Log.d(getClass().toString(), "Successfully fetched " + stopArrayList.size() + " StopLocation-objects.");
         } catch(JSONException je) {
             je.printStackTrace();
         }
