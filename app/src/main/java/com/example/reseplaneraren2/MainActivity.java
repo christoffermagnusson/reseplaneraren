@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         // Hämtar in den lagrade startsidan i appen
         //navigationView.setSelectedItemId(getStartScreen());
 
-        inflate(Screen.INITIAL_SETUP);
+        //inflate(Screen.INITIAL_SETUP);
     }
 
     // denna metod ska kopplas till någon form av menyval , inställningar eller liknande som ställer in ny startsida
