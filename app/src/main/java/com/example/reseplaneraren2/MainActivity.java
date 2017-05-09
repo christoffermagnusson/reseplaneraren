@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.reseplaneraren2.Util.BottomNavigationViewHelper;
 import com.example.reseplaneraren2.controllers.departuredisplay.DepartureBoardDisplayController;
 import com.example.reseplaneraren2.data.interfaces.IJourneyPlannerData;
 import com.example.reseplaneraren2.data.internal.JourneyPlannerFactory;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView = (BottomNavigationView) findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.disableShiftMode(navigationView);
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
