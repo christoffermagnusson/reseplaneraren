@@ -36,7 +36,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchStopLabel"
         android:inputType="text"
-        android:imeOptions="actionSearch"/>
+        android:imeOptions="actionSearch"
+        android:text=""/>
 
     <TextView
         android:id="@+id/nearbyStopsLabel"

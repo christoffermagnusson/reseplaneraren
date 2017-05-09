@@ -66,6 +66,9 @@ public class DepartureBoardDisplayController extends Fragment implements UIDepar
         depAdapter = new DepartureAdapter(getContext(),R.layout.departure_display_listitem, mDepList);
         depListView.setAdapter(depAdapter);
 
+        journeyPlanner.getDepartureBoard(this, Calendar.getInstance(), stopLocation);
+        ((MainActivity)getActivity()).changeTitle(stopLocation.getName());
+
         /* Init swipe refresh stuff */
         departureSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.departureSwipeRefresh);
         setupSwipeListener(departureSwipeRefreshLayout);

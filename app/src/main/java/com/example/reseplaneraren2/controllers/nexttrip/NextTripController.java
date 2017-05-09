@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
@@ -31,7 +34,7 @@ import java.util.ArrayList;
 public class NextTripController extends Fragment implements UIStopLocationHandler {
 
     private ArrayList<StopLocation> mStopLocationsBySearch;
-    AutoCompleteTextView autoCompleteTextView;
+    private AutoCompleteTextView autoCompleteTextView;
     private StopLocationAdapter searchAdapter;
 
     private ArrayList<StopLocation> mStopLocationsNearby;
@@ -64,6 +67,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
 
         autoCompleteTextView = (AutoCompleteTextView)v.findViewById(R.id.searchStopField);
         mStopLocationsBySearch = new ArrayList<StopLocation>();
+
 
         nearbyList = (ListView) v.findViewById(R.id.nearbyStopsList);
         mStopLocationsNearby = new ArrayList<StopLocation>();
@@ -108,11 +112,12 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
 
     private void proceedToDepartureDisplay(StopLocation selectedLocation){
         MainActivity activity = (MainActivity) this.getActivity();
-
+        autoCompleteTextView.setText("");
         activity.inflateDepartureDisplay(Screen.DEPARTURE_DISPLAY, selectedLocation);
     }
 
     private void setupTextListener() {
+        final MainActivity activity = (MainActivity) this.getActivity();
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -131,6 +136,19 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
             @Override
             public void afterTextChanged(Editable s) {}
         });
+        autoCompleteTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                    Utils.hideKeyboard(activity);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     private void setupSearchClickListener() {
