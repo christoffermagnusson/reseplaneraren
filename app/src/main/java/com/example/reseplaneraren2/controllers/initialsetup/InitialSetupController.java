@@ -17,11 +17,25 @@ public class InitialSetupController extends Fragment{
 
     private ViewPager initialSetupViewPager;
 
+    private InitialSetupAdapter initialSetupAdapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+
+
+
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.initial_setup,container,false);
+        View view = inflater.inflate(R.layout.layout.initial_setup,container,false);
 
-        //initialSetupViewPager = (ViewPager)
+        initialSetupAdapter = new InitialSetupAdapter(getActivity().getSupportFragmentManager());
+        initialSetupViewPager = (ViewPager)view.findViewById(R.id.initialVP);
+        initialSetupViewPager.setAdapter(initialSetupAdapter);
 
         return view;
     }
