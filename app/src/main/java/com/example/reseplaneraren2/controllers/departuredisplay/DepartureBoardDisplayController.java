@@ -4,8 +4,10 @@ package com.example.reseplaneraren2.controllers.departuredisplay;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,7 @@ public class DepartureBoardDisplayController extends Fragment implements UIDepar
     private DepartureAdapter depAdapter;
     private ArrayList<Departure> mDepList = new ArrayList<Departure>();
     private ListView depListView;
+    private SwipeRefreshLayout departureSwipeRefreshLayout;
 
     private MainActivity mParent;
 
@@ -57,21 +60,42 @@ public class DepartureBoardDisplayController extends Fragment implements UIDepar
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_departure_display_controller, container, false);
 
+        /* Init list stuff */
         depListView = (ListView)view.findViewById(R.id.departureListView);
         depHandler = this;
         depAdapter = new DepartureAdapter(getContext(),R.layout.departure_display_listitem, mDepList);
         depListView.setAdapter(depAdapter);
 
-        journeyPlanner.getDepartureBoard(this, Calendar.getInstance(), stopLocation);
+        /* Init swipe refresh stuff */
+        departureSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.departureSwipeRefresh);
+        setupSwipeListener(departureSwipeRefreshLayout);
+        requestDeparture();
 
         return view;
     }
 
+    private void setupSwipeListener(SwipeRefreshLayout srl) {
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestDeparture();
+            }
+        });
+    }
+
+    private void requestDeparture() {
+        Log.d(getClass().toString(), "requestDeparture()");
+        mDepList.clear();
+        journeyPlanner.getDepartureBoard(this, Calendar.getInstance(), stopLocation);
+        departureSwipeRefreshLayout.setRefreshing(true);
+    }
+
     @Override
     public void receiveDeparture(ArrayList<Departure> departureList) {
-        mDepList.clear();
+        Log.d(getClass().toString(), "receiveDeparture()");
         mDepList.addAll(departureList);
         depAdapter.notifyDataSetChanged();
+        departureSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

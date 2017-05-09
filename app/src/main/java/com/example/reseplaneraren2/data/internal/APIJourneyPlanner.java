@@ -92,7 +92,7 @@ public class APIJourneyPlanner implements IJourneyPlannerData {
             public Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("grant_type", "client_credentials");
-                params.put("scope", identifier);
+                params.put("scope", "device_" + identifier);
                 return params;
             }
         };

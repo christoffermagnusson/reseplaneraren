@@ -125,9 +125,6 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
                     if (elapsed >= 750000000) {
                         journeyPlanner.getStopLocationByName(locHandler, s.toString());
                         lastSearchTime = System.nanoTime();
-                        Log.d("dunkDEBUG", "Approved search for location!");
-                    } else {
-                        Log.d("dunkDEBUG", "Denied search for location!");
                     }
                 }
             }

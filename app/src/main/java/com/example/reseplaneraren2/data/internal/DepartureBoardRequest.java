@@ -86,8 +86,8 @@ public class DepartureBoardRequest {
                     }
                     departureArrayList.add(departure);
                 }
-                handler.receiveDeparture(departureArrayList);
             }
+            handler.receiveDeparture(departureArrayList);
         } catch(JSONException je) {
             je.printStackTrace();
         }
