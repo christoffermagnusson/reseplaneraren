@@ -32,6 +32,17 @@ public class APIJourneyPlanner implements IJourneyPlannerData {
         authenticate(identifier);
     }
 
+    private void authenticate(String identifier) {
+        APIAuthenticationRequest authReq = new APIAuthenticationRequest();
+        authReq.send(identifier, queue, new APIAuthenticationRequest.APIAuthenticationListener() {
+            @Override
+            public void receiveAccessToken(String token) {
+                accessToken = token;
+                // Log time here??
+            }
+        });
+    }
+
     public static APIJourneyPlanner getInstance(Context context, String identifier) {
         if (context == null || identifier == null) throw new NullPointerException("Context context cannot be null");
         if (identifier.trim().isEmpty()) throw new IllegalArgumentException("String identifier must be longer than 0");
@@ -64,38 +75,5 @@ public class APIJourneyPlanner implements IJourneyPlannerData {
         if (accessToken != null) {
             new DepartureBoardRequest().send(handler, stop.getStopId(), d, t, queue, accessToken);
         }
-    }
-
-    private void authenticate(final String identifier) {
-        StringRequest authReq = new StringRequest(Request.Method.POST, "https://api.vasttrafik.se/token", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("dunkDEBUG", response);
-                String[] parts = response.toString().split("\"access_token\":\"");
-                accessToken = parts[1].substring(0, parts[1].length()-2);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR","error => "+error.toString());
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  headers = new HashMap<String, String>();
-                headers.put("User-Agent", "Mozilla/5.0");
-                headers.put("Content-Type", "application/x-www-form-urlencoded");
-                headers.put("Authorization", "Basic Y0ZtTENRS2lwMGVRUElJMTdSdkVkR1NhenBRYTpZTU5PdXhNRlg0OUpWaEhQTkpCV0xZQVU3Zllh");
-                return headers;
-            }
-            @Override
-            public Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("grant_type", "client_credentials");
-                params.put("scope", "device_" + identifier);
-                return params;
-            }
-        };
-        queue.add(authReq);
     }
 }
