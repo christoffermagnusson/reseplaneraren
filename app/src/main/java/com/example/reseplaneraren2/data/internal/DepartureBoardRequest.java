@@ -24,7 +24,7 @@ public class DepartureBoardRequest {
     private String baseUrl = "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard";
     private String format = "json";
 
-    private String timeSpan = "90";
+    private String timeSpan = "30";
     private String maxDepartures = "4";
 
     void send(final UIDepartureBoardHandler handler, final String id, final String date, final String time, final RequestQueue queue, final String accessToken) {
