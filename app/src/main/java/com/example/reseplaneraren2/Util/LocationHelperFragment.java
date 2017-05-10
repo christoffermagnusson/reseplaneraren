@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -19,11 +20,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-/**
- * Created by samuel on 2017-05-10.
- */
 
-public class LocationHelper implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ActivityCompat.OnRequestPermissionsResultCallback{
+public class LocationHelperFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static final String TAG = MainActivity.class.getName();
@@ -32,18 +30,39 @@ public class LocationHelper implements GoogleApiClient.ConnectionCallbacks, Goog
 
     private boolean hasPermissions;
 
+    LocationListener handler;
 
-    public LocationHelper(Activity c){
-        this.activity = c;
+    public interface LocationListener {
+        void receiveLocation(double lat, double lng);
+        void receiveLocationError(LocationError error);
+    }
 
+    public enum LocationError {
+        PERMISSION_NOT_GRANTED,
+        CONNECTION_FAILED
+    }
+
+    public void setListener(LocationListener handler) {
+        this.handler = handler;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+
+        activity = getActivity();
         hasPermissions = checkLocationPermission();
 
         if (hasPermissions) {
-            Log.d(TAG, "Already got permissions");
+            if (mGoogleApiClient == null) {
+                buildClient();
+            }
+            mGoogleApiClient.connect();
         }
     }
 
-    public boolean checkLocationPermission() {
+    private boolean checkLocationPermission() {
 
         if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission. ACCESS_FINE_LOCATION)
@@ -63,19 +82,15 @@ public class LocationHelper implements GoogleApiClient.ConnectionCallbacks, Goog
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //Prompt the user once explanation has been shown
-                                ActivityCompat.requestPermissions(activity,
-                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                         MY_PERMISSIONS_REQUEST_LOCATION);
                             }
                         })
                         .create()
                         .show();
-
-
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(activity,
-                        new String[]{Manifest.permission. ACCESS_FINE_LOCATION},
+                requestPermissions(new String[]{Manifest.permission. ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
             return false;
@@ -87,29 +102,24 @@ public class LocationHelper implements GoogleApiClient.ConnectionCallbacks, Goog
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
-
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d(TAG, "Permissions good!");
                     // permission was granted, yay! Do the
                     // location-related task you need to do.
                     if (mGoogleApiClient == null) {
                         buildClient();
                     }
                     mGoogleApiClient.connect();
-
                 } else {
-                    Log.d(TAG, "Permissions bad!");
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-
+                    if (handler != null) {
+                        handler.receiveLocationError(LocationError.PERMISSION_NOT_GRANTED);
+                    }
                 }
                 return;
             }
-
         }
     }
 
@@ -120,7 +130,13 @@ public class LocationHelper implements GoogleApiClient.ConnectionCallbacks, Goog
                 == PackageManager.PERMISSION_GRANTED) {
 
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            Log.d(TAG, mLastLocation.getLatitude() + "," + mLastLocation.getLongitude());
+            if (mLastLocation != null) {
+                double lat = mLastLocation.getLatitude();
+                double lng = mLastLocation.getLongitude();
+                if (handler != null) {
+                    handler.receiveLocation(lat, lng);
+                }
+            }
         }
     }
 
@@ -131,7 +147,9 @@ public class LocationHelper implements GoogleApiClient.ConnectionCallbacks, Goog
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        if (handler != null) {
+            handler.receiveLocationError(LocationError.CONNECTION_FAILED);
+        }
     }
 
     private void buildClient(){
