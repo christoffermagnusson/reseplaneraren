@@ -1,6 +1,7 @@
 package com.example.reseplaneraren2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     private IJourneyPlannerData journeyPlanner;
 
-    private static int hasDoneInitialSetup; // 0 betyder att startinställingar ej är gjorda, 1 betyder att den är gjord!
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         String id = Settings.Secure.getString(this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         journeyPlanner = JourneyPlannerFactory.getJourneyPlanner(this.getApplicationContext(), id);
+
 
 
 
@@ -201,5 +204,6 @@ public class MainActivity extends AppCompatActivity {
     public IJourneyPlannerData getJourneyPlanner() {
         return journeyPlanner;
     }
+
 
 }
