@@ -98,7 +98,9 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
             }
             @Override
             public void receiveLocationError(LocationHelperFragment.LocationError error) {
-                Log.d(getClass().toString(), "Location error: " + error.toString());
+                mStopLocationsNearby.clear();
+                mStopLocationsNearby.add(new StopLocation("-1", error.toString()));
+                nearbyAdapter.notifyDataSetChanged();
             }
         });
         getFragmentManager().beginTransaction().add(lhf, "location_fragment").commit();
