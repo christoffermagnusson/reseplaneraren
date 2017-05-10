@@ -1,17 +1,11 @@
 package com.example.reseplaneraren2.controllers.initialsetup;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.ListFragment;
-
-import com.example.reseplaneraren2.R;
 
 import java.util.ArrayList;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by christoffer on 2017-05-09.
@@ -23,42 +17,42 @@ public class InitialSetupAdapter extends FragmentPagerAdapter {
 
     private static final int NUM_ITEMS = 4;
 
-    private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
+    private ArrayList<UISetupFragment> fragments = new ArrayList<UISetupFragment>();
 
     public InitialSetupAdapter(Context context, FragmentManager manager){
         super(manager);
         this.context = context;
 
         setupFragmentsList();
+
+
     }
 
     private void setupFragmentsList(){
-        InitialSetupFragment searchTripFragment = new InitialSetupFragment();
-        //searchTripFragment.setLabel(R.string.search_trip_setup);
-        // in med icon
+        InitialSetupFragmentSearchTrip searchTripFragment = new InitialSetupFragmentSearchTrip();
+
         fragments.add(searchTripFragment);
 
-        InitialSetupFragment nextTripFragment = new InitialSetupFragment();
-        //nextTripFragment.setLabel(R.string.next_trip_setup);
-        // in med icon
+        InitialSetupFragmentNextTrip nextTripFragment = new InitialSetupFragmentNextTrip();
+
         fragments.add(nextTripFragment);
 
-        InitialSetupFragment favoritesFragment = new InitialSetupFragment();
-        //favoritesFragment.setLabel(R.string.favorites_setup);
-        // in med icon
+        InitialSetupFragmentFavorites favoritesFragment = new InitialSetupFragmentFavorites();
+
         fragments.add(favoritesFragment);
 
-        InitialSetupFragment ticketFragment = new InitialSetupFragment();
-        //ticketFragment.setLabel(R.string.ticket_setup);
-        // in med icon
+        InitialSetupFragmentTicket ticketFragment = new InitialSetupFragmentTicket();
+
         fragments.add(ticketFragment);
 
     }
 
+
+
     @Override
     public Fragment getItem(int position) {
 
-                return fragments.get(position);
+                return (Fragment) fragments.get(position);
 
     }
 

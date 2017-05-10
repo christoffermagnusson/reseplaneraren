@@ -29,7 +29,7 @@ public class InitialSetupController extends Fragment{
         initialSetupViewPager = (ViewPager)view.findViewById(R.id.initialVP);
         initialSetupViewPager.setAdapter(initialSetupAdapter);
 
-        initialSetupViewPager.setBackgroundResource(R.drawable.ic_change_homepage);
+
 
         return view;
     }

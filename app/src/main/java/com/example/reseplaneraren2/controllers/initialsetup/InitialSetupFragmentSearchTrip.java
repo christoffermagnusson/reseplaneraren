@@ -14,7 +14,7 @@ import com.example.reseplaneraren2.R;
  * Created by christoffer on 2017-05-09.
  */
 
-public class InitialSetupFragment extends Fragment {
+public class InitialSetupFragmentSearchTrip extends Fragment implements UISetupFragment{
 
 
 
@@ -32,6 +32,9 @@ public class InitialSetupFragment extends Fragment {
         labelTextView = (TextView)view.findViewById(R.id.screenDescription);
         iconImageView = (ImageView)view.findViewById(R.id.screenLabelImage);
 
+        labelTextView.setText(getString(R.string.search_trip_setup));
+        iconImageView.setImageResource(R.drawable.ic_search_trip_24dp);
+        iconImageView.setColorFilter(R.color.colorVasttrafikBlue);
 
 
         return view;
