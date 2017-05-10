@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private IJourneyPlannerData journeyPlanner;
 
+    private static int hasDoneInitialSetup; // 0 betyder att startinställingar ej är gjorda, 1 betyder att den är gjord!
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        System.out.println("Testing_new_commit");
+
 
         String id = Settings.Secure.getString(this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -81,26 +83,60 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // Hämtar in den lagrade startsidan i appen
-        //navigationView.setSelectedItemId(getStartScreen());
 
-        inflate(Screen.INITIAL_SETUP);
+        if(getHasDoneInitialSetup()==0) {
+            inflate(Screen.INITIAL_SETUP);
+        }
+            inflateStartScreen();
+            Log.d("ERROR>>>>>",""+getStartScreen());
+
     }
 
+    private void inflateStartScreen(){
+        navigationView.setSelectedItemId(getStartScreen());
+        switch(getStartScreen()){
+            case R.layout.search_trip_layout:
+                inflate(Screen.SEARCH_TRIP);
+                break;
+            case R.layout.next_trip_layout:
+                inflate(Screen.NEXT_TRIP);
+                break;
+            case R.layout.favorites_layout:
+                inflate(Screen.FAVORITES);
+                break;
+            case R.layout.ticket_layout:
+                inflate(Screen.TICKET);
+                break;
+            default: return;
+        }
+    }
     // denna metod ska kopplas till någon form av menyval , inställningar eller liknande som ställer in ny startsida
-    private void saveStartScreen(int screen){
+    public void saveStartScreen(int screen){
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(getString(R.string.start_screen), screen);
+
+        Log.d("Saving to preferences ", ""+screen);
+        if(getHasDoneInitialSetup()==0){
+            editor.putInt("SetupDone", 1);
+        }
+
         editor.commit();
     }
 
-    private int getStartScreen(){
+    public int getStartScreen(){
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         int screen = sharedPref.getInt(getString(R.string.start_screen),0);
 
         return screen;
     }
+
+    private int getHasDoneInitialSetup(){
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("SetupDone",0);
+    }
+
+
 
 
     public void inflate(Screen screenToDisplay){

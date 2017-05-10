@@ -67,6 +67,11 @@ public class InitialSetupFragmentNextTrip extends Fragment implements UISetupFra
         public int getIconReference() {
             return iconReference;
         }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.next_trip_layout;
     }
+}
 
 

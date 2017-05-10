@@ -56,6 +56,8 @@ public class InitialSetupAdapter extends FragmentPagerAdapter {
 
     }
 
+
+
     @Override
     public int getCount() {
         return NUM_ITEMS;

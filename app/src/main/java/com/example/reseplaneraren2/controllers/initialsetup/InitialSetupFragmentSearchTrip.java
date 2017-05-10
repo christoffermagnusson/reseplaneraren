@@ -61,4 +61,9 @@ public class InitialSetupFragmentSearchTrip extends Fragment implements UISetupF
     public int getIconReference() {
         return iconReference;
     }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.search_trip_layout;
+    }
 }

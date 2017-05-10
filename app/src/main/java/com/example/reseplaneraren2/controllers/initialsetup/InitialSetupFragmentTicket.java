@@ -60,4 +60,9 @@ public class InitialSetupFragmentTicket extends Fragment implements UISetupFragm
     public int getIconReference() {
         return iconReference;
     }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.ticket_layout;
+    }
 }

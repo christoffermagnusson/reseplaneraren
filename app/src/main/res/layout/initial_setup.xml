@@ -76,7 +76,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/choseButton"
+        android:id="@+id/selectButton"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="112dp"
         android:layout_height="62dp"
@@ -97,7 +97,7 @@
         android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choseButton"
+        app:layout_constraintTop_toBottomOf="@+id/selectButton"
         app:layout_constraintHorizontal_bias="0.509" />
 
 </android.support.constraint.ConstraintLayout>

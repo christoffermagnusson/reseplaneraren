@@ -56,4 +56,9 @@ public class InitialSetupFragmentFavorites extends Fragment implements UISetupFr
     public int getIconReference() {
         return iconReference;
     }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.favorites_layout;
+    }
 }

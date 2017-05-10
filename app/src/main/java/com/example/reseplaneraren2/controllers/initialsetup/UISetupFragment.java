@@ -19,4 +19,6 @@ public interface UISetupFragment {
 
     int getIconReference();
 
+    int getLayoutResource();
+
 }

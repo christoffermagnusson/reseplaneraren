@@ -3,10 +3,13 @@ package com.example.reseplaneraren2.controllers.initialsetup;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
 
 /**
@@ -19,6 +22,8 @@ public class InitialSetupController extends Fragment{
 
     private InitialSetupAdapter initialSetupAdapter;
 
+    private Button selectButton;
+
 
 
     @Override
@@ -29,9 +34,21 @@ public class InitialSetupController extends Fragment{
         initialSetupViewPager = (ViewPager)view.findViewById(R.id.initialVP);
         initialSetupViewPager.setAdapter(initialSetupAdapter);
 
+        selectButton = (Button)view.findViewById(R.id.selectButton);
 
+
+        selectButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                UISetupFragment currentFragment = (UISetupFragment) initialSetupAdapter.getItem(initialSetupViewPager.getCurrentItem());
+                MainActivity activity = (MainActivity) getActivity();
+                activity.saveStartScreen(currentFragment.getLayoutResource());
+
+            }
+        });
 
         return view;
     }
+
+
 
 }
