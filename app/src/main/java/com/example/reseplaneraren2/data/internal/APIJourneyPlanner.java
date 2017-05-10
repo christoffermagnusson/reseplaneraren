@@ -75,6 +75,24 @@ public class APIJourneyPlanner implements IJourneyPlannerData {
         }
     }
 
+    public void getStopLocationByCoordinate(final UIStopLocationHandler handler, final double lat, final double lng) {
+        if (handler == null) throw new NullPointerException("UIStopLocationHandler handler cannot be null");
+
+        if (accessToken != null && expirationTime != null &&
+                (Calendar.getInstance().compareTo(expirationTime) < 0)) {
+            new StopLocationByCoordinateRequest().send(handler, lat, lng, queue, accessToken);
+        } else {
+            authenticate();
+            Log.d(getClass().toString(), "Missing or expired access token. Re-authenticating.");
+            new Handler().postDelayed(new Runnable() { // I think this is really bad, but will probably work for this prototype. Same goes for other get-methods in this class.
+                @Override
+                public void run() {
+                    getStopLocationByCoordinate(handler, lat, lng);
+                }
+            }, 2000);
+        }
+    }
+
     public void getDepartureBoard(final UIDepartureBoardHandler handler, final Calendar time, final StopLocation stop) {
         if (handler == null) throw new NullPointerException("UIDepartureBoardHandler handler cannot be null");
         if (time == null) throw new NullPointerException("Argument time cannot be null");
