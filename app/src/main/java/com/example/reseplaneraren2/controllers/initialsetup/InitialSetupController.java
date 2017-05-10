@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
@@ -42,6 +43,8 @@ public class InitialSetupController extends Fragment{
                 UISetupFragment currentFragment = (UISetupFragment) initialSetupAdapter.getItem(initialSetupViewPager.getCurrentItem());
                 MainActivity activity = (MainActivity) getActivity();
                 activity.saveStartScreen(currentFragment.getLayoutResource());
+                Toast.makeText(getActivity(),"Startsida vald",Toast.LENGTH_LONG).show();
+                activity.inflateStartScreen();
 
             }
         });
