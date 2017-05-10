@@ -13,4 +13,6 @@ public interface IJourneyPlannerData {
     public void getStopLocationByName(UIStopLocationHandler handler, String request);
 
     public void getDepartureBoard(UIDepartureBoardHandler handler, Calendar calendar, StopLocation location);
+
+    public void getStopLocationByCoordinate(final UIStopLocationHandler handler, final double lat, final double lng);
 }

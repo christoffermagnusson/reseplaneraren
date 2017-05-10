@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
 import com.example.reseplaneraren2.Screen;
-import com.example.reseplaneraren2.Util.LocationHelper;
+import com.example.reseplaneraren2.Util.LocationHelperFragment;
 import com.example.reseplaneraren2.Util.Utils;
 import com.example.reseplaneraren2.data.interfaces.IJourneyPlannerData;
 import com.example.reseplaneraren2.data.interfaces.UIStopLocationHandler;
@@ -79,17 +79,29 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         setupSearchClickListener();
         setupListClickListener();
 
-        // testing coordinate function
-        //JourneyPlannerFactory.getJourneyPlanner().getStopLocationByCoordinate(locHandler,null);
-
         searchAdapter = new StopLocationAdapter(getContext(), R.layout.simple_list_item, mStopLocationsBySearch);
         autoCompleteTextView.setAdapter(searchAdapter);
 
         nearbyAdapter = new StopLocationAdapter(getContext(),R.layout.simple_list_item, mStopLocationsNearby);
         nearbyList.setAdapter(nearbyAdapter);
         ((MainActivity)getActivity()).changeTitle("Nästa tur");
-        LocationHelper lHelp = new LocationHelper(mParent);
+
         return v;
+    }
+
+    private void initLocation() {
+        LocationHelperFragment lhf = new LocationHelperFragment();
+        lhf.setListener(new LocationHelperFragment.LocationListener() {
+            @Override
+            public void receiveLocation(double lat, double lng) {
+                journeyPlanner.getStopLocationByCoordinate(locHandler, lat, lng);
+            }
+            @Override
+            public void receiveLocationError(LocationHelperFragment.LocationError error) {
+                Log.d(getClass().toString(), "Location error: " + error.toString());
+            }
+        });
+        getFragmentManager().beginTransaction().add(lhf, "location_fragment").commit();
     }
 
     @Override
@@ -103,14 +115,13 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     public void receiveStopLocationByCoordinate(ArrayList<StopLocation> stopLocList){
         mStopLocationsNearby.clear();
         mStopLocationsNearby.addAll(stopLocList);
+        nearbyAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void receiveStopLocationError(String message) {
 
     }
-
-
 
     private void proceedToDepartureDisplay(StopLocation selectedLocation){
         MainActivity activity = (MainActivity) this.getActivity();
@@ -176,7 +187,11 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         });
     }
 
-
-
-
+    /* JourneyPlanner hadn't gotten any access token when doing this in onCreate (I got next trip as start page). Trying here instead. Maybe good to get new location
+    everytime onStart is called anyway. */
+    @Override
+    public void onStart() {
+        super.onStart();
+        initLocation();
+    }
 }

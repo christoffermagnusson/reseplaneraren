@@ -25,7 +25,7 @@ public class StopLocationByCoordinateRequest {
     private String format = "json";
 
     void send(final UIStopLocationHandler handler, final double lat, final double lng, final RequestQueue queue, final String accessToken) {
-        baseUrl += "?originCoordLat=" + lat + "&originCoordLong=" + lng;
+        baseUrl += "?originCoordLat=" + lat + "&originCoordLong=" + lng + "&format=" + format;
         StringRequest stopReq = new StringRequest(Request.Method.GET, baseUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -57,14 +57,16 @@ public class StopLocationByCoordinateRequest {
             ArrayList<StopLocation> stopArrayList = new ArrayList<StopLocation>();
             for (int i = 0; i < stopLocArray.length(); i++) {
                 JSONObject stopJson = (JSONObject) stopLocArray.getJSONObject(i);
+                if (!stopJson.has("track")) { // This service from Västtrafik returns one StopLocation for each track, one of them does not contain any track. We only want one.
 
-                StopLocation stop = new StopLocation(
-                        (String)stopJson.get("name"),
-                        (String)stopJson.get("id"));
-                //Double.parseDouble((String)stopJson.get("lat")),
-                //Double.parseDouble((String)stopJson.get("lon")),
-                //(String)stopJson.get("idx"));
-                stopArrayList.add(stop);
+                    StopLocation stop = new StopLocation(
+                            (String) stopJson.get("name"),
+                            (String) stopJson.get("id"));
+                    //Double.parseDouble((String)stopJson.get("lat")),
+                    //Double.parseDouble((String)stopJson.get("lon")),
+                    //(String)stopJson.get("idx"));
+                    stopArrayList.add(stop);
+                }
             }
             handler.receiveStopLocationByCoordinate(stopArrayList);
             Log.d(getClass().toString(), "Successfully fetched " + stopArrayList.size() + " StopLocation-objects.");
