@@ -14,4 +14,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="toolbar_settings">Inställningar</string>
     <string name="set_homepage">Sätt som startsida</string>
+
+    <string name="search_trip_setup">Sök resa kan vara den bästa funktionen</string>
+    <string name="next_trip_setup">Nästa tur kan vara den bästa funktionen</string>
+    <string name="favorites_setup">Favoriter kan vara den bästa funktionen</string>
+    <string name="ticket_setup">Biljett kan vara den bästa funktionen</string>
+
 </resources>

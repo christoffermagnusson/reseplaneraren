@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 
 import com.example.reseplaneraren2.controllers.departuredisplay.DepartureBoardDisplayController;
 import com.example.reseplaneraren2.controllers.favorites.FavoritesController;
+import com.example.reseplaneraren2.controllers.initialsetup.InitialSetupController;
 import com.example.reseplaneraren2.controllers.nexttrip.NextTripController;
 import com.example.reseplaneraren2.controllers.searchtrip.SearchTripController;
 import com.example.reseplaneraren2.controllers.ticket.MyTicketFragment;
@@ -11,7 +12,7 @@ import com.example.reseplaneraren2.controllers.ticket.TicketController;
 
 public enum Screen {
 
-    //INITIAL_SETUP(new InitialSetupController()),
+    INITIAL_SETUP(new InitialSetupController()),
 
     SEARCH_TRIP(new SearchTripController()),
     NEXT_TRIP(new NextTripController()),
