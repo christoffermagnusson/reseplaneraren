@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
 import com.example.reseplaneraren2.Screen;
+import com.example.reseplaneraren2.Util.LocationHelper;
 import com.example.reseplaneraren2.Util.Utils;
 import com.example.reseplaneraren2.data.interfaces.IJourneyPlannerData;
 import com.example.reseplaneraren2.data.interfaces.UIStopLocationHandler;
@@ -87,6 +88,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         nearbyAdapter = new StopLocationAdapter(getContext(),R.layout.simple_list_item, mStopLocationsNearby);
         nearbyList.setAdapter(nearbyAdapter);
         ((MainActivity)getActivity()).changeTitle("Nästa tur");
+        LocationHelper lHelp = new LocationHelper(mParent);
         return v;
     }
 
