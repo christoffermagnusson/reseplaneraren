@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StopLocationByNameRequest {
@@ -51,25 +52,39 @@ public class StopLocationByNameRequest {
     private void sendToCaller(String message, UIStopLocationHandler handler) {
         try {
             JSONObject root = new JSONObject(message);
-            JSONObject locationList = (JSONObject) root.get("LocationList");
-            JSONArray stopLocArray = locationList.getJSONArray("StopLocation");
+            JSONObject stopLocList = (JSONObject) root.get("LocationList");
 
             ArrayList<StopLocation> stopArrayList = new ArrayList<StopLocation>();
-            for (int i = 0; i < stopLocArray.length(); i++) {
-                JSONObject stopJson = (JSONObject) stopLocArray.getJSONObject(i);
-
-                StopLocation stop = new StopLocation(
-                        (String)stopJson.get("name"),
-                        (String)stopJson.get("id"));
-                        //Double.parseDouble((String)stopJson.get("lat")),
-                        //Double.parseDouble((String)stopJson.get("lon")),
-                        //(String)stopJson.get("idx"));
-                stopArrayList.add(stop);
+            if (stopLocList.has("StopLocation")) {
+                Object stopLocObj = stopLocList.get("StopLocation");
+                if (stopLocObj instanceof JSONArray) {
+                    JSONArray stopLocArray = (JSONArray) stopLocObj;
+                    for (int i = 0; i < stopLocArray.length(); i++) {
+                        JSONObject stopJson = stopLocArray.getJSONObject(i);
+                        parseStopLocation(stopJson, stopArrayList);
+                    }
+                } else if (stopLocObj instanceof JSONObject) {
+                    JSONObject stopJson = (JSONObject) stopLocObj;
+                    parseStopLocation(stopJson, stopArrayList);
+                } else {
+                    Log.d(getClass().toString(), "Unexpected StopLocation-response");
+                }
             }
             handler.receiveStopLocationByName(stopArrayList);
             Log.d(getClass().toString(), "Successfully fetched " + stopArrayList.size() + " StopLocation-objects.");
         } catch(JSONException je) {
             je.printStackTrace();
+        }
+    }
+
+    private void parseStopLocation(JSONObject stopJson, List<StopLocation> listToStore) {
+        try {
+            StopLocation stop = new StopLocation(
+                    (String)stopJson.get("name"),
+                    (String)stopJson.get("id"));
+            listToStore.add(stop);
+        } catch (JSONException jsonE) {
+                jsonE.printStackTrace();
         }
     }
 }

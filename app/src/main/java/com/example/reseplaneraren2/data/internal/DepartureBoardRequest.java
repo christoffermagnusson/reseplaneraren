@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DepartureBoardRequest {
@@ -53,44 +54,61 @@ public class DepartureBoardRequest {
 
     private void sendToCaller(String message, UIDepartureBoardHandler handler) {
         try {
+            Log.d("dunkDEBUG", "Response: " + message);
             JSONObject root = new JSONObject(message);
-            JSONObject locationList = (JSONObject) root.get("DepartureBoard");
-            JSONArray stopLocArray = locationList.getJSONArray("Departure");
+            JSONObject depList = (JSONObject) root.get("DepartureBoard");
 
             ArrayList<Departure> departureArrayList = new ArrayList<Departure>();
-            for (int i = 0; i < stopLocArray.length(); i++) {
-                JSONObject depJson = (JSONObject) stopLocArray.getJSONObject(i);
-                Departure departure = new Departure(
-                        (String) depJson.get("sname"),
-                        (String) depJson.get("direction"),
-                        (String) depJson.get("type"),
-                        (String) depJson.get("time"),
-                        (String) depJson.get("bgColor"),
-                        (String) depJson.get("fgColor"));
-
-                /* New departure, or should we only add time to existing one */
-                if (departureArrayList.contains(departure)) {
-                    int index = departureArrayList.indexOf(departure);
-                    Departure depToUpdate = departureArrayList.get(index);
-                    depToUpdate.addDepartureTime(departure.getDepartureTimes().get(0));
+            if (depList.has("Departure")) { // If no departure is found, it won't contain this JSONArray. We should return an empty ArrayList then.
+                Object depObj = depList.get("Departure");
+                if (depObj instanceof JSONArray) {
+                    JSONArray depArray = (JSONArray) depObj;
+                    for (int i = 0; i < depArray.length(); i++) {
+                        JSONObject depJson = (JSONObject) depArray.getJSONObject(i);
+                        parseDeparture(depJson, departureArrayList);
+                    }
+                } else if (depObj instanceof JSONObject) {
+                    JSONObject depJson = (JSONObject) depObj;
+                    parseDeparture(depJson, departureArrayList);
                 } else {
-                    /* Optional fields */
-                    if (depJson.has("track")) {
-                        departure.setTrack((String) depJson.get("track"));
-                    }
-                    if (depJson.has("rtTime")) {
-                        departure.setRealTime((String) depJson.get("rtTime"));
-                    }
-                    if (depJson.has("accessibility")) {
-                        departure.setAccessibility((String) depJson.get("accessibility"));
-                    }
-                    departureArrayList.add(departure);
+                    Log.d(getClass().toString(), "Unexpected Departure-response");
                 }
             }
             handler.receiveDeparture(departureArrayList);
             Log.d(getClass().toString(), "Successfully fetched " + departureArrayList.size() + " Departure-objects.");
         } catch(JSONException je) {
             je.printStackTrace();
+        }
+    }
+
+    private void parseDeparture(JSONObject depJson, List<Departure> listToStore) {
+        try {
+            Departure departure = new Departure(
+                    (String) depJson.get("sname"),
+                    (String) depJson.get("direction"),
+                    (String) depJson.get("type"),
+                    (String) depJson.get("time"),
+                    (String) depJson.get("bgColor"),
+                    (String) depJson.get("fgColor"));
+
+            if (listToStore.contains(departure)) { /* Existing departure */
+                int index = listToStore.indexOf(departure);
+                Departure depToUpdate = listToStore.get(index);
+                depToUpdate.addDepartureTime(departure.getDepartureTimes().get(0));
+            } else { /* New departure */ /* Optional fields */
+                if (depJson.has("track")) {
+                    departure.setTrack((String) depJson.get("track"));
+                }
+                if (depJson.has("rtTime")) {
+                    departure.setRealTime((String) depJson.get("rtTime"));
+                }
+                if (depJson.has("accessibility")) {
+                    departure.setAccessibility((String) depJson.get("accessibility"));
+                }
+                listToStore.add(departure);
+            }
+        } catch (JSONException jsonE) {
+            jsonE.printStackTrace();
         }
     }
 }

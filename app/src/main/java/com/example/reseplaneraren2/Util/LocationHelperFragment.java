@@ -2,7 +2,6 @@ package com.example.reseplaneraren2.Util;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -39,7 +38,8 @@ public class LocationHelperFragment extends Fragment implements GoogleApiClient.
 
     public enum LocationError {
         PERMISSION_NOT_GRANTED,
-        CONNECTION_FAILED
+        CONNECTION_FAILED,
+        NO_STOPS_FOUND
     }
 
     public void setListener(LocationListener handler) {
@@ -136,6 +136,8 @@ public class LocationHelperFragment extends Fragment implements GoogleApiClient.
                 if (handler != null) {
                     handler.receiveLocation(lat, lng);
                 }
+            } else {
+                handler.receiveLocationError(LocationError.NO_STOPS_FOUND);
             }
         }
     }
