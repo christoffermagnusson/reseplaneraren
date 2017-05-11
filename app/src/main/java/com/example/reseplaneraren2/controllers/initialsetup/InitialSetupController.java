@@ -38,6 +38,7 @@ public class InitialSetupController extends Fragment{
 
         selectButton = (Button)view.findViewById(R.id.selectButton);
 
+        ((MainActivity)getActivity()).hideToolbar();
 
         selectButton.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -46,7 +47,7 @@ public class InitialSetupController extends Fragment{
                 activity.saveStartScreen(currentFragment.getLayoutResource());
                 Toast.makeText(getActivity(),"Startsida vald",Toast.LENGTH_LONG).show();
                 activity.inflateStartScreen();
-
+                ((MainActivity)getActivity()).showToolbar();
             }
         });
 
