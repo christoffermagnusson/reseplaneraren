@@ -63,6 +63,7 @@ public class APIJourneyPlanner implements IJourneyPlannerData {
         if (accessToken != null && expirationTime != null &&
                 (Calendar.getInstance().compareTo(expirationTime) < 0)) {
             new StopLocationByNameRequest().send(handler, input, queue, accessToken);
+            Log.d(getClass().toString(), "Requesting StopLocations by name: " + input);
         } else {
             authenticate();
             Log.d(getClass().toString(), "Missing or expired access token. Re-authenticating.");

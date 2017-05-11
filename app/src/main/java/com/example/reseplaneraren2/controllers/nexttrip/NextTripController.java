@@ -98,8 +98,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
             }
             @Override
             public void receiveLocationError(LocationHelperFragment.LocationError error) {
-                mStopLocationsNearby.clear();
-                mStopLocationsNearby.add(new StopLocation("-1", error.toString()));
+                // Display error in some way
                 nearbyAdapter.notifyDataSetChanged();
             }
         });
@@ -141,7 +140,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
                 if (s.length() >= 3) {
                     long currentTime = System.nanoTime();
                     long elapsed = currentTime - lastSearchTime;
-
+                    // Right now, an extra search is made when user clicks an autocomplete-entry, since that changes content in the text-field, but I don't think we can prevent it?
                     if (elapsed >= 750000000) {
                         journeyPlanner.getStopLocationByName(locHandler, s.toString());
                         lastSearchTime = System.nanoTime();

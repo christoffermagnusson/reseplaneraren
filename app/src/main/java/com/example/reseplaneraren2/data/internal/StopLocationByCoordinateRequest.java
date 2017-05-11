@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StopLocationByCoordinateRequest {
@@ -52,26 +53,40 @@ public class StopLocationByCoordinateRequest {
         try {
             JSONObject root = new JSONObject(message);
             JSONObject locationList = (JSONObject) root.get("LocationList");
-            JSONArray stopLocArray = locationList.getJSONArray("StopLocation");
 
             ArrayList<StopLocation> stopArrayList = new ArrayList<StopLocation>();
-            for (int i = 0; i < stopLocArray.length(); i++) {
-                JSONObject stopJson = (JSONObject) stopLocArray.getJSONObject(i);
-                if (!stopJson.has("track")) { // This service from Västtrafik returns one StopLocation for each track, one of them does not contain any track. We only want one.
-
-                    StopLocation stop = new StopLocation(
-                            (String) stopJson.get("name"),
-                            (String) stopJson.get("id"));
-                    //Double.parseDouble((String)stopJson.get("lat")),
-                    //Double.parseDouble((String)stopJson.get("lon")),
-                    //(String)stopJson.get("idx"));
-                    stopArrayList.add(stop);
+            if (locationList.has("StopLocation")) {
+                Object stopLocObj = locationList.get("StopLocation");
+                if (stopLocObj instanceof JSONArray) {
+                    JSONArray stopLocArray = (JSONArray) stopLocObj;
+                    for (int i = 0; i < stopLocArray.length(); i++) {
+                        JSONObject stopJson = stopLocArray.getJSONObject(i);
+                        parseStopLocation(stopJson, stopArrayList);
+                    }
+                } else if (stopLocObj instanceof JSONObject) {
+                    JSONObject stopJson = (JSONObject) stopLocObj;
+                    parseStopLocation(stopJson, stopArrayList);
+                } else {
+                    Log.d(getClass().toString(), "Unexpected StopLocation-response");
                 }
             }
             handler.receiveStopLocationByCoordinate(stopArrayList);
             Log.d(getClass().toString(), "Successfully fetched " + stopArrayList.size() + " StopLocation-objects.");
         } catch(JSONException je) {
             je.printStackTrace();
+        }
+    }
+
+    private void parseStopLocation(JSONObject stopJson, List<StopLocation> listToStore) {
+        try {
+            if (!stopJson.has("track")) { // This service returns one StopLocation for each track. We only want one.
+                StopLocation stop = new StopLocation(
+                        (String)stopJson.get("name"),
+                        (String)stopJson.get("id"));
+                listToStore.add(stop);
+            }
+        } catch (JSONException jsonE) {
+            jsonE.printStackTrace();
         }
     }
 }
