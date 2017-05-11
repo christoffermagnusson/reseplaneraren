@@ -8,10 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
+
+import java.util.ArrayList;
 
 
 /**
@@ -20,11 +23,15 @@ import com.example.reseplaneraren2.R;
 
 public class InitialSetupController extends Fragment{
 
+
+
     private ViewPager initialSetupViewPager;
 
     private InitialSetupAdapter initialSetupAdapter;
 
     private Button selectButton;
+
+    private ArrayList<ImageView> indicatorIcons = new ArrayList<ImageView>();
 
 
 
@@ -35,6 +42,26 @@ public class InitialSetupController extends Fragment{
         initialSetupAdapter = new InitialSetupAdapter(getContext(),getActivity().getSupportFragmentManager());
         initialSetupViewPager = (ViewPager)view.findViewById(R.id.initialVP);
         initialSetupViewPager.setAdapter(initialSetupAdapter);
+
+        initIndicatorIcons(view);
+
+        initialSetupViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position){
+                changeIndicatorColor(position);
+                Log.d("Page changed","Position "+position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         selectButton = (Button)view.findViewById(R.id.selectButton);
 
@@ -53,6 +80,28 @@ public class InitialSetupController extends Fragment{
         return view;
     }
 
+
+    private void initIndicatorIcons(View view){
+
+            indicatorIcons.add((ImageView) view.findViewById(R.id.indicator_dot_1));
+            indicatorIcons.add((ImageView) view.findViewById(R.id.indicator_dot_2));
+            indicatorIcons.add((ImageView) view.findViewById(R.id.indicator_dot_3));
+            indicatorIcons.add((ImageView) view.findViewById(R.id.indicator_dot_4));
+        for(ImageView icon : indicatorIcons){
+            icon.setImageResource(R.drawable.ic_indicator_dot);
+        }
+
+    }
+
+    private void changeIndicatorColor(int position){
+        for(ImageView icon : indicatorIcons){
+            if(indicatorIcons.indexOf(icon) == position){
+                icon.setImageResource(R.drawable.ic_indicator_dot_selected);
+            } else{
+                icon.setImageResource(R.drawable.ic_indicator_dot);
+            }
+        }
+    }
 
 
 }
