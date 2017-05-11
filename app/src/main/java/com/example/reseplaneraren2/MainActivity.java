@@ -201,6 +201,13 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    public void hideToolbar(){
+        getSupportActionBar().hide();
+    }
+
+    public void showToolbar(){
+        getSupportActionBar().show();
+    }
     public IJourneyPlannerData getJourneyPlanner() {
         return journeyPlanner;
     }
