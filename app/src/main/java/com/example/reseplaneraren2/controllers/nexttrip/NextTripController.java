@@ -69,6 +69,20 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         return v;
     }
 
+    /* JourneyPlanner hadn't gotten any access token when doing this in onCreate (I got next trip as start page). Trying here instead. Maybe good to get new location
+    everytime onStart is called anyway. */
+    @Override
+    public void onStart() {
+        super.onStart();
+        initLocation();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Should we stop the locationListener here???
+    }
+
     private void initSearchField(View v) {
         autoCompleteTextView = (AutoCompleteTextView)v.findViewById(R.id.searchStopField);
         mStopLocationsBySearch = new ArrayList<StopLocation>();
@@ -183,19 +197,5 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
                 proceedToDepartureDisplay(stop);
             }
         });
-    }
-
-    /* JourneyPlanner hadn't gotten any access token when doing this in onCreate (I got next trip as start page). Trying here instead. Maybe good to get new location
-    everytime onStart is called anyway. */
-    @Override
-    public void onStart() {
-        super.onStart();
-        initLocation();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        // Should we stop the locationListener here???
     }
 }
