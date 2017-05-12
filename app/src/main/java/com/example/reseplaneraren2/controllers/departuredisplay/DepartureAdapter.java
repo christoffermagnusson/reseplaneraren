@@ -60,7 +60,9 @@ public class DepartureAdapter extends ArrayAdapter<Departure> {
 
             departureName.setText(departure.getName());
             departureDestination.setText(departure.getDestination());
-            departureTrack.setText("Läge " + departure.getTrack());
+            if (departure.getTrack() != null) {
+                departureTrack.setText("Läge " + departure.getTrack());
+            }
             departureName.setBackgroundColor(Color.parseColor(departure.getFgColor()));
             departureName.setTextColor(Color.parseColor(departure.getBgColor()));
 
