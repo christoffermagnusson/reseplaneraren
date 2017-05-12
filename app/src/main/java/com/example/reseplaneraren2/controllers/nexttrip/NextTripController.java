@@ -48,8 +48,8 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     private IJourneyPlannerData journeyPlanner;
     private long lastSearchTime;
 
-    private double currentLng;
-    private double currentLat;
+    private double currentLng = -1;
+    private double currentLat = -1;
 
     @Override
     public void onAttach(Context context) {
@@ -68,7 +68,6 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         View v = inflater.inflate(R.layout.next_trip_layout, container, false);
         initSearchField(v);
         initNearbyList(v);
-        initLocation();
         mParent.changeTitle("Nästa tur");
         return v;
     }
@@ -78,12 +77,13 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     @Override
     public void onStart() {
         super.onStart();
+        startLocationService();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        // Should we stop the locationListener here???
+        stopLocationService();
     }
 
     private void initSearchField(View v) {
@@ -103,12 +103,14 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         nearbyList.setAdapter(nearbyAdapter);
     }
 
-    private void initLocation() {
+    private void startLocationService() {
         LocationHelperFragment lhf = new LocationHelperFragment();
         lhf.setListener(new LocationHelperFragment.CoordinateListener() {
             @Override
             public void receiveLocation(double lat, double lng) {
-                //journeyPlanner.getStopLocationByCoordinate(locHandler, lat, lng);
+                if (currentLat == -1 && currentLng == -1) {
+                    journeyPlanner.getStopLocationByCoordinate(locHandler, lat, lng);
+                }
                 currentLat = lat;
                 currentLng = lng;
                 Log.d("DEBUG", lat + " " + lng);
@@ -120,6 +122,13 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
             }
         });
         getFragmentManager().beginTransaction().add(lhf, "location_fragment").commit();
+    }
+
+    private void stopLocationService() {
+        Fragment locationService = getFragmentManager().findFragmentByTag("location_fragment");
+        if (locationService != null) {
+            getFragmentManager().beginTransaction().remove(locationService).commit();
+        }
     }
 
     @Override
