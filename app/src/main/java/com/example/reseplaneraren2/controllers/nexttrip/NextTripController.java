@@ -51,42 +51,39 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         try {
             mParent = (MainActivity) context;
+            locHandler = this;
         } catch (final ClassCastException e) {
             e.printStackTrace();
         }
-
         journeyPlanner = mParent.getJourneyPlanner();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.next_trip_layout, container, false);
+        initSearchField(v);
+        initNearbyList(v);
+        mParent.changeTitle("Nästa tur");
+        return v;
+    }
 
-
+    private void initSearchField(View v) {
         autoCompleteTextView = (AutoCompleteTextView)v.findViewById(R.id.searchStopField);
         mStopLocationsBySearch = new ArrayList<StopLocation>();
-
-
-        nearbyList = (ListView) v.findViewById(R.id.nearbyStopsList);
-        mStopLocationsNearby = new ArrayList<StopLocation>();
-
-        locHandler = this;
-
         setupTextListener();
         setupSearchClickListener();
-        setupListClickListener();
-
         searchAdapter = new StopLocationAdapter(getContext(), R.layout.simple_list_item, mStopLocationsBySearch);
         autoCompleteTextView.setAdapter(searchAdapter);
+    }
 
+    private void initNearbyList(View v) {
+        nearbyList = (ListView) v.findViewById(R.id.nearbyStopsList);
+        mStopLocationsNearby = new ArrayList<StopLocation>();
+        setupListClickListener();
         nearbyAdapter = new StopLocationAdapter(getContext(),R.layout.simple_list_item, mStopLocationsNearby);
         nearbyList.setAdapter(nearbyAdapter);
-        ((MainActivity)getActivity()).changeTitle("Nästa tur");
-
-        return v;
     }
 
     private void initLocation() {
@@ -194,5 +191,11 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     public void onStart() {
         super.onStart();
         initLocation();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Should we stop the locationListener here???
     }
 }
