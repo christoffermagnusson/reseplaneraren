@@ -48,8 +48,9 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     private IJourneyPlannerData journeyPlanner;
     private long lastSearchTime;
 
-    private double currentLng = -1;
-    private double currentLat = -1;
+    private boolean nearbyFetched = false;
+    private double currentLng;
+    private double currentLat;
 
     @Override
     public void onAttach(Context context) {
@@ -108,12 +109,13 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         lhf.setListener(new LocationHelperFragment.CoordinateListener() {
             @Override
             public void receiveLocation(double lat, double lng) {
-                if (currentLat == -1 && currentLng == -1) {
+                if (!nearbyFetched) {
                     journeyPlanner.getStopLocationByCoordinate(locHandler, lat, lng);
+                    nearbyFetched = true;
                 }
                 currentLat = lat;
                 currentLng = lng;
-                Log.d("DEBUG", lat + " " + lng);
+                Log.d(getClass().toString(), "Updated coordinates: " + lat + ", " + lng);
             }
             @Override
             public void receiveLocationError(LocationHelperFragment.LocationError error) {
@@ -121,13 +123,14 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
                 nearbyAdapter.notifyDataSetChanged();
             }
         });
-        getFragmentManager().beginTransaction().add(lhf, "location_fragment").commit();
+        getChildFragmentManager().beginTransaction().add(lhf, "location_fragment").commit();
     }
 
     private void stopLocationService() {
-        Fragment locationService = getFragmentManager().findFragmentByTag("location_fragment");
+        Fragment locationService = getChildFragmentManager().findFragmentByTag("location_fragment");
         if (locationService != null) {
-            getFragmentManager().beginTransaction().remove(locationService).commit();
+            getChildFragmentManager().beginTransaction().remove(locationService).commitAllowingStateLoss();
+            nearbyFetched = false;
         }
     }
 
