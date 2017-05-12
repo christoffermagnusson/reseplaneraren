@@ -48,6 +48,9 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     private IJourneyPlannerData journeyPlanner;
     private long lastSearchTime;
 
+    private double currentLng;
+    private double currentLat;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -65,6 +68,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         View v = inflater.inflate(R.layout.next_trip_layout, container, false);
         initSearchField(v);
         initNearbyList(v);
+        initLocation();
         mParent.changeTitle("Nästa tur");
         return v;
     }
@@ -74,7 +78,6 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     @Override
     public void onStart() {
         super.onStart();
-        initLocation();
     }
 
     @Override
@@ -102,10 +105,13 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
 
     private void initLocation() {
         LocationHelperFragment lhf = new LocationHelperFragment();
-        lhf.setListener(new LocationHelperFragment.LocationListener() {
+        lhf.setListener(new LocationHelperFragment.CoordinateListener() {
             @Override
             public void receiveLocation(double lat, double lng) {
-                journeyPlanner.getStopLocationByCoordinate(locHandler, lat, lng);
+                //journeyPlanner.getStopLocationByCoordinate(locHandler, lat, lng);
+                currentLat = lat;
+                currentLng = lng;
+                Log.d("DEBUG", lat + " " + lng);
             }
             @Override
             public void receiveLocationError(LocationHelperFragment.LocationError error) {

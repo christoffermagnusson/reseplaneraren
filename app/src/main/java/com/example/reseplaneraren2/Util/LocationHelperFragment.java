@@ -12,11 +12,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 
 import com.example.reseplaneraren2.MainActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 
@@ -29,9 +30,11 @@ public class LocationHelperFragment extends Fragment implements GoogleApiClient.
 
     private boolean hasPermissions;
 
-    LocationListener handler;
+    private LocationListener locationListener;
 
-    public interface LocationListener {
+    CoordinateListener handler;
+
+    public interface CoordinateListener {
         void receiveLocation(double lat, double lng);
         void receiveLocationError(LocationError error);
     }
@@ -39,10 +42,10 @@ public class LocationHelperFragment extends Fragment implements GoogleApiClient.
     public enum LocationError {
         PERMISSION_NOT_GRANTED,
         CONNECTION_FAILED,
-        NO_STOPS_FOUND
+        NO_LOCATION_FOUND
     }
 
-    public void setListener(LocationListener handler) {
+    public void setListener(CoordinateListener handler) {
         this.handler = handler;
     }
 
@@ -53,12 +56,29 @@ public class LocationHelperFragment extends Fragment implements GoogleApiClient.
 
         activity = getActivity();
         hasPermissions = checkLocationPermission();
+        locationListener = buildLocationListener();
 
         if (hasPermissions) {
             if (mGoogleApiClient == null) {
                 buildClient();
             }
             mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (null != mGoogleApiClient && !mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (null != mGoogleApiClient && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
         }
     }
 
@@ -125,26 +145,12 @@ public class LocationHelperFragment extends Fragment implements GoogleApiClient.
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        if (ContextCompat.checkSelfPermission(activity,
-                Manifest.permission. ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-
-            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if (mLastLocation != null) {
-                double lat = mLastLocation.getLatitude();
-                double lng = mLastLocation.getLongitude();
-                if (handler != null) {
-                    handler.receiveLocation(lat, lng);
-                }
-            } else {
-                handler.receiveLocationError(LocationError.NO_STOPS_FOUND);
-            }
-        }
+        startLocationUpdates();
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        stopLocationUpdates();
     }
 
     @Override
@@ -154,6 +160,38 @@ public class LocationHelperFragment extends Fragment implements GoogleApiClient.
         }
     }
 
+    private LocationListener buildLocationListener() {
+        return new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                double lat = location.getLatitude();
+                double lng = location.getLongitude();
+                handler.receiveLocation(lat, lng);
+            }
+        };
+    }
+
+    private void startLocationUpdates() {
+        if (ContextCompat.checkSelfPermission(activity,
+                Manifest.permission. ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, buildLocationRequest(), locationListener);
+        }
+    }
+
+    private void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(
+                mGoogleApiClient, locationListener);
+    }
+
+    private LocationRequest buildLocationRequest() {
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10 * 1000);
+        mLocationRequest.setFastestInterval(5 * 1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        return mLocationRequest;
+    }
+
     private void buildClient(){
         this.mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .addConnectionCallbacks(this)
@@ -161,4 +199,6 @@ public class LocationHelperFragment extends Fragment implements GoogleApiClient.
                 .addApi(LocationServices.API)
                 .build();
     }
+
+
 }
