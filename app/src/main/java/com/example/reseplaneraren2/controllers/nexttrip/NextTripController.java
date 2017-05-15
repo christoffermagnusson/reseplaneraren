@@ -3,6 +3,7 @@ package com.example.reseplaneraren2.controllers.nexttrip;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -49,6 +50,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     private long lastSearchTime;
 
     private boolean nearbyFetched = false;
+    private SwipeRefreshLayout nearbySwipeRefresh;
     private double currentLng;
     private double currentLat;
 
@@ -69,6 +71,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         View v = inflater.inflate(R.layout.next_trip_layout, container, false);
         initSearchField(v);
         initNearbyList(v);
+        initNearbyRefresh(v);
         mParent.changeTitle("Nästa tur");
         return v;
     }
@@ -104,13 +107,23 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         nearbyList.setAdapter(nearbyAdapter);
     }
 
+    private void initNearbyRefresh(View v) {
+        nearbySwipeRefresh = (SwipeRefreshLayout) v.findViewById(R.id.nearbySwipeRefresh);
+        nearbySwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestStopLocationsByCoordinates(currentLat, currentLng);
+            }
+        });
+    }
+
     private void startLocationService() {
         LocationHelperFragment lhf = new LocationHelperFragment();
         lhf.setListener(new LocationHelperFragment.CoordinateListener() {
             @Override
             public void receiveLocation(double lat, double lng) {
                 if (!nearbyFetched) {
-                    journeyPlanner.getStopLocationByCoordinate(locHandler, lat, lng);
+                    requestStopLocationsByCoordinates(lat, lng);
                     nearbyFetched = true;
                 }
                 currentLat = lat;
@@ -146,6 +159,12 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         mStopLocationsNearby.clear();
         mStopLocationsNearby.addAll(stopLocList);
         nearbyAdapter.notifyDataSetChanged();
+        nearbySwipeRefresh.setRefreshing(false);
+    }
+
+    private void requestStopLocationsByCoordinates(double lat, double lng) {
+        journeyPlanner.getStopLocationByCoordinate(this, lat, lng);
+        nearbySwipeRefresh.setRefreshing(true);
     }
 
     @Override

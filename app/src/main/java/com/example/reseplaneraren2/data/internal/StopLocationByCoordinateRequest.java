@@ -24,9 +24,10 @@ public class StopLocationByCoordinateRequest {
 
     private String baseUrl = "https://api.vasttrafik.se/bin/rest.exe/v2/location.nearbystops";
     private String format = "json";
+    private String maxDist = "1500";
 
     void send(final UIStopLocationHandler handler, final double lat, final double lng, final RequestQueue queue, final String accessToken) {
-        baseUrl += "?originCoordLat=" + lat + "&originCoordLong=" + lng + "&format=" + format;
+        baseUrl += "?originCoordLat=" + lat + "&originCoordLong=" + lng + "&maxDist=" + maxDist + "&maxNo" + 20 + "&format=" + format;
         StringRequest stopReq = new StringRequest(Request.Method.GET, baseUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
