@@ -33,18 +33,45 @@ public class InitialSetupController extends Fragment{
 
     private ArrayList<ImageView> indicatorIcons = new ArrayList<ImageView>();
 
-
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.initial_setup,container,false);
+        view = inflater.inflate(R.layout.initial_setup,container,false);
 
         initialSetupAdapter = new InitialSetupAdapter(getContext(),getActivity().getSupportFragmentManager());
         initialSetupViewPager = (ViewPager)view.findViewById(R.id.initialVP);
         initialSetupViewPager.setAdapter(initialSetupAdapter);
+        setupInitialSetupPageChangeListener();
 
         initIndicatorIcons(view);
 
+
+
+        selectButton = (Button)view.findViewById(R.id.selectButton);
+        setupSelectButtonListener();
+
+        ((MainActivity)getActivity()).hideToolbar();
+
+
+
+        return view;
+    }
+
+    private void setupSelectButtonListener() {
+        selectButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                UISetupFragment currentFragment = (UISetupFragment) initialSetupAdapter.getItem(initialSetupViewPager.getCurrentItem());
+                MainActivity activity = (MainActivity) getActivity();
+                activity.saveStartScreen(currentFragment.getLayoutResource());
+                Toast.makeText(getActivity(),"Startsida vald",Toast.LENGTH_LONG).show();
+                activity.inflateStartScreen();
+                ((MainActivity)getActivity()).showToolbar();
+            }
+        });
+    }
+
+    private void setupInitialSetupPageChangeListener() {
         initialSetupViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -62,34 +89,23 @@ public class InitialSetupController extends Fragment{
 
             }
         });
-
-        selectButton = (Button)view.findViewById(R.id.selectButton);
-
-        ((MainActivity)getActivity()).hideToolbar();
-
-        selectButton.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                UISetupFragment currentFragment = (UISetupFragment) initialSetupAdapter.getItem(initialSetupViewPager.getCurrentItem());
-                MainActivity activity = (MainActivity) getActivity();
-                activity.saveStartScreen(currentFragment.getLayoutResource());
-                Toast.makeText(getActivity(),"Startsida vald",Toast.LENGTH_LONG).show();
-                activity.inflateStartScreen();
-                ((MainActivity)getActivity()).showToolbar();
-            }
-        });
-
-        return view;
     }
 
 
     private void initIndicatorIcons(View view){
+            int index = 0;
 
             indicatorIcons.add((ImageView) view.findViewById(R.id.indicator_dot_1));
             indicatorIcons.add((ImageView) view.findViewById(R.id.indicator_dot_2));
             indicatorIcons.add((ImageView) view.findViewById(R.id.indicator_dot_3));
             indicatorIcons.add((ImageView) view.findViewById(R.id.indicator_dot_4));
         for(ImageView icon : indicatorIcons){
-            icon.setImageResource(R.drawable.ic_indicator_dot);
+            if(index==0) {
+                icon.setImageResource(R.drawable.ic_indicator_dot_selected);
+            } else{
+                icon.setImageResource(R.drawable.ic_indicator_dot);
+            }
+            index++;
         }
 
     }
