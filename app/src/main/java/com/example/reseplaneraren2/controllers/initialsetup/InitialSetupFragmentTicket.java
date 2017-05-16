@@ -29,7 +29,7 @@ public class InitialSetupFragmentTicket extends Fragment implements UISetupFragm
         labelTextView = (TextView)view.findViewById(R.id.screenDescription);
         iconImageView = (ImageView)view.findViewById(R.id.screenLabelImage);
 
-        labelTextView.setText(getString(R.string.ticket_setup));
+        labelTextView.setText(getText(R.string.ticket_setup));
         iconImageView.setImageResource(R.drawable.ic_ticket_24dp);
 
         return view;

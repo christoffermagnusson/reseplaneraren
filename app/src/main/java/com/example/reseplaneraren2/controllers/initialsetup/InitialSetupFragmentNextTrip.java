@@ -40,7 +40,7 @@ public class InitialSetupFragmentNextTrip extends Fragment implements UISetupFra
             labelTextView = (TextView)view.findViewById(R.id.screenDescription);
             iconImageView = (ImageView)view.findViewById(R.id.screenLabelImage);
 
-            labelTextView.setText(getString(R.string.next_trip_setup));
+            labelTextView.setText(getText(R.string.next_trip_setup));
             iconImageView.setImageResource(R.drawable.ic_next_trip_24dp);
 
             return view;

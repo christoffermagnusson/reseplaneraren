@@ -29,7 +29,7 @@ public class InitialSetupFragmentFavorites extends Fragment implements UISetupFr
         labelTextView = (TextView)view.findViewById(R.id.screenDescription);
         iconImageView = (ImageView)view.findViewById(R.id.screenLabelImage);
 
-        labelTextView.setText(getString(R.string.favorites_setup));
+        labelTextView.setText(getText(R.string.favorites_setup));
         iconImageView.setImageResource(R.drawable.ic_favorites_24dp);
 
         return view;

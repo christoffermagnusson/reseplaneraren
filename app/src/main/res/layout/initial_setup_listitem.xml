@@ -22,7 +22,7 @@
     <TextView
         android:id="@+id/screenDescription"
         android:layout_width="283dp"
-        android:layout_height="47dp"
+        android:layout_height="match_parent"
         android:layout_marginBottom="0dp"
         android:layout_marginRight="50dp"
         android:layout_marginTop="8dp"

@@ -15,9 +15,9 @@
     <string name="toolbar_settings">Inställningar</string>
     <string name="set_homepage">Sätt som startsida</string>
 
-    <string name="search_trip_setup">Sök resa kan vara den bästa funktionen</string>
-    <string name="next_trip_setup">Nästa tur kan vara den bästa funktionen</string>
-    <string name="favorites_setup">Favoriter kan vara den bästa funktionen</string>
-    <string name="ticket_setup">Biljett kan vara den bästa funktionen</string>
+    <string name="search_trip_setup"><b>Sök resa</b> låter dig planera en resa från en destination till en annan vid den tid du önskar</string>
+    <string name="next_trip_setup"><b>Nästa tur</b> presenterar kommande avgångar från närliggande eller angiven hållplats</string>
+    <string name="favorites_setup"><b>Favoriter</b> ger dig snabb åtkomst till dina sparade favoritrutter och destinationer</string>
+    <string name="ticket_setup"><b>Biljett</b> låter dig hantera, se och köpa biljetter</string>
 
 </resources>

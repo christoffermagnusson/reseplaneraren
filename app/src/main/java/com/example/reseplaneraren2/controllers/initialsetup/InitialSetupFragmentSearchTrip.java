@@ -32,7 +32,7 @@ public class InitialSetupFragmentSearchTrip extends Fragment implements UISetupF
         labelTextView = (TextView)view.findViewById(R.id.screenDescription);
         iconImageView = (ImageView)view.findViewById(R.id.screenLabelImage);
 
-        labelTextView.setText(getString(R.string.search_trip_setup));
+        labelTextView.setText(getText(R.string.search_trip_setup));
         iconImageView.setImageResource(R.drawable.ic_search_trip_24dp);
         iconImageView.setColorFilter(R.color.colorVasttrafikBlue);
 
