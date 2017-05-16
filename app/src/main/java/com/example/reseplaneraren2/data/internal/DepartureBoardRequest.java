@@ -54,7 +54,6 @@ public class DepartureBoardRequest {
 
     private void sendToCaller(String message, UIDepartureBoardHandler handler) {
         try {
-            Log.d("dunkDEBUG", "Response: " + message);
             JSONObject root = new JSONObject(message);
             JSONObject depList = (JSONObject) root.get("DepartureBoard");
 
