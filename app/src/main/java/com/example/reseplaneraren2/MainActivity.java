@@ -3,6 +3,7 @@ package com.example.reseplaneraren2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(getHasDoneInitialSetup()==0) {
-            navigationView.setVisibility(View.INVISIBLE);
+            navigationView.setVisibility(View.GONE);
             inflate(Screen.INITIAL_SETUP);
         }
         else{
@@ -100,20 +101,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void inflateStartScreen(){
-        navigationView.setSelectedItemId(getStartScreen());
+
         navigationView.setVisibility(View.VISIBLE);
         switch(getStartScreen()){
             case R.layout.search_trip_layout:
                 inflate(Screen.SEARCH_TRIP);
+                navigationView.setSelectedItemId(R.id.navigation_search_trip);
                 break;
             case R.layout.next_trip_layout:
                 inflate(Screen.NEXT_TRIP);
+                navigationView.setSelectedItemId(R.id.navigation_next_trip);
                 break;
             case R.layout.favorites_layout:
                 inflate(Screen.FAVORITES);
+                navigationView.setSelectedItemId(R.id.navigation_favorites);
                 break;
             case R.layout.ticket_layout:
                 inflate(Screen.TICKET);
+                navigationView.setSelectedItemId(R.id.navigation_ticket);
                 break;
             default: return;
         }
