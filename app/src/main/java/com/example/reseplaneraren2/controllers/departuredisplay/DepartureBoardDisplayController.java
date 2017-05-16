@@ -10,6 +10,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -73,7 +76,24 @@ public class DepartureBoardDisplayController extends Fragment implements UIDepar
         setupSwipeListener(departureSwipeRefreshLayout);
         requestDeparture();
 
+        setHasOptionsMenu(true);
+
         return view;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.refresh) {
+            requestDeparture();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.findItem(R.id.refresh).setVisible(true);
     }
 
     private void setupSwipeListener(SwipeRefreshLayout srl) {
@@ -86,16 +106,14 @@ public class DepartureBoardDisplayController extends Fragment implements UIDepar
     }
 
     private void requestDeparture() {
-        Log.d(getClass().toString(), "requestDeparture()");
-        mDepList.clear();
         journeyPlanner.getDepartureBoard(this, Calendar.getInstance(), stopLocation);
         departureSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void receiveDeparture(ArrayList<Departure> departureList) {
-        Log.d(getClass().toString(), "receiveDeparture()");
-        mDepList.addAll(departureList);
+        depAdapter.clear();
+        depAdapter.addAll(departureList);
         depAdapter.notifyDataSetChanged();
         departureSwipeRefreshLayout.setRefreshing(false);
     }

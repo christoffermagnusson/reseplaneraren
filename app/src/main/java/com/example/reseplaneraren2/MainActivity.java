@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
 
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
         }
-        return false;
+        return super.onOptionsItemSelected(item); // Was false before
     }
 
     public void hideToolbar(){

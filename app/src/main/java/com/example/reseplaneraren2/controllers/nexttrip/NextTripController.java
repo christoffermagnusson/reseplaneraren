@@ -9,6 +9,9 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -72,6 +75,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
         initSearchField(v);
         initNearbyList(v);
         initNearbyRefresh(v);
+        setHasOptionsMenu(true);
         mParent.changeTitle("Nästa tur");
         return v;
     }
@@ -88,6 +92,21 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     public void onStop() {
         super.onStop();
         stopLocationService();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.refresh) {
+            requestStopLocationsByCoordinates(currentLat, currentLng);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.findItem(R.id.refresh).setVisible(true);
     }
 
     private void initSearchField(View v) {
