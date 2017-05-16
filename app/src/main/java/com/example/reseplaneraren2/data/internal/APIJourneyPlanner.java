@@ -40,7 +40,7 @@ public class APIJourneyPlanner implements IJourneyPlannerData {
             }
             @Override
             public void receiveError(String error) {
-                // Inform user interface?
+                Log.d(getClass().toString(), error);
             }
         });
     }

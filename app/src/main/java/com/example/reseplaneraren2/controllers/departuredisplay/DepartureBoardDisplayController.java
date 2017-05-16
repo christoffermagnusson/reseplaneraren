@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
@@ -120,11 +121,14 @@ public class DepartureBoardDisplayController extends Fragment implements UIDepar
 
     @Override
     public void receiveDepartureError(String message) {
-
+        displayErrorMessage(message);
     }
 
     public void setStopLocation(StopLocation stopLocation){
         this.stopLocation=stopLocation;
     }
 
+    private void displayErrorMessage(String errorMsg) {
+        Toast.makeText(mParent, errorMsg, Toast.LENGTH_LONG).show();
+    }
 }

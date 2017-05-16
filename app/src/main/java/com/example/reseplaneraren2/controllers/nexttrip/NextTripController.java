@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
@@ -151,8 +152,17 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
             }
             @Override
             public void receiveLocationError(LocationHelperFragment.LocationError error) {
-                // Display error in some way
-                nearbyAdapter.notifyDataSetChanged();
+                switch (error) {
+                    case NO_LOCATION_FOUND:
+                        displayErrorMessage("Inga närliggande hållplatser hittade");
+                        break;
+                    case CONNECTION_FAILED:
+                        displayErrorMessage("Kunde ej hämta platsdata");
+                        break;
+                    case PERMISSION_NOT_GRANTED:
+                        displayErrorMessage("Ingen åtkomst till platsdata");
+                        break;
+                }
             }
         });
         getChildFragmentManager().beginTransaction().add(lhf, "location_fragment").commit();
@@ -188,7 +198,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
 
     @Override
     public void receiveStopLocationError(String message) {
-
+        displayErrorMessage("Connection failed to Västtrafik server");
     }
 
     private void proceedToDepartureDisplay(StopLocation selectedLocation){
@@ -253,5 +263,9 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
                 proceedToDepartureDisplay(stop);
             }
         });
+    }
+
+    private void displayErrorMessage(String errorMsg) {
+        Toast.makeText(mParent, errorMsg, Toast.LENGTH_LONG).show();
     }
 }
