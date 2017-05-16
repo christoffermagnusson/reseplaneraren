@@ -77,11 +77,16 @@ public class DepartureBoardDisplayController extends Fragment implements UIDepar
         setupSwipeListener(departureSwipeRefreshLayout);
 
         depAdapter.clear(); // If list has been loaded before (e.g. doing a search, navigating back, searching again) > List should be cleared.
-        requestDeparture();
 
         setHasOptionsMenu(true);
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        requestDeparture(); // Should refresh both while first launching, and after having app minimized
+        super.onStart();
     }
 
     @Override
