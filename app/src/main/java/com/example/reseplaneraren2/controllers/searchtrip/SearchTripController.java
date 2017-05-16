@@ -169,7 +169,10 @@ public class SearchTripController extends Fragment {
                 Calendar c = Calendar.getInstance();
                 year = c.get(Calendar.YEAR); month = c.get(Calendar.MONTH); day = c.get(Calendar.DAY_OF_MONTH);
             }
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+            DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+            dialog.getDatePicker().setMinDate(System.currentTimeMillis()); // ensures the user can't select dates that has passed!
+
+            return dialog;
         }
 
         public static DatePickerFragment newInstance(Calendar c) {
@@ -192,6 +195,7 @@ public class SearchTripController extends Fragment {
             date.set(Calendar.YEAR, year);
             date.set(Calendar.MONTH, month);
             date.set(Calendar.DAY_OF_MONTH, day);
+
             parent.changeDate(date);
         }
     }
