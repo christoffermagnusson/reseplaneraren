@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
     private Toolbar myToolbar;
 
-    public static int currentScreen;  // to use when setting the start page
+
+
+    public static Screen currentScreenObj;
 
     private IJourneyPlannerData journeyPlanner;
 
@@ -44,19 +46,19 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_search_trip:
                     inflate(Screen.SEARCH_TRIP);
-                    currentScreen=Screen.SEARCH_TRIP.getResourceID();
+                    currentScreenObj = Screen.SEARCH_TRIP;
                     return true;
                 case R.id.navigation_next_trip:
                     inflate(Screen.NEXT_TRIP);
-                    currentScreen=Screen.NEXT_TRIP.getResourceID();
+                    currentScreenObj = Screen.NEXT_TRIP;
                     return true;
                 case R.id.navigation_favorites:
                     inflate(Screen.FAVORITES);
-                    currentScreen=Screen.FAVORITES.getResourceID();
+                    currentScreenObj = Screen.FAVORITES;
                     return true;
                 case R.id.navigation_ticket:
                     inflate(Screen.TICKET);
-                    currentScreen=Screen.TICKET.getResourceID();
+                    currentScreenObj = Screen.TICKET;
                     return true;
             }
             return false;
@@ -107,22 +109,22 @@ public class MainActivity extends AppCompatActivity {
             case R.layout.search_trip_layout:
                 inflate(Screen.SEARCH_TRIP);
                 navigationView.setSelectedItemId(R.id.navigation_search_trip);
-                currentScreen=Screen.SEARCH_TRIP.getResourceID();
+                currentScreenObj=Screen.SEARCH_TRIP;
                 break;
             case R.layout.next_trip_layout:
                 inflate(Screen.NEXT_TRIP);
                 navigationView.setSelectedItemId(R.id.navigation_next_trip);
-                currentScreen=Screen.NEXT_TRIP.getResourceID();
+                currentScreenObj=Screen.NEXT_TRIP;
                 break;
             case R.layout.favorites_layout:
                 inflate(Screen.FAVORITES);
                 navigationView.setSelectedItemId(R.id.navigation_favorites);
-                currentScreen=Screen.FAVORITES.getResourceID();
+                currentScreenObj=Screen.FAVORITES;
                 break;
             case R.layout.ticket_layout:
                 inflate(Screen.TICKET);
                 navigationView.setSelectedItemId(R.id.navigation_ticket);
-                currentScreen=Screen.TICKET.getResourceID();
+                currentScreenObj=Screen.TICKET;
                 break;
             default: return;
         }
@@ -200,9 +202,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Sammitest", "Kom hit iaf");
                 return true;
             case R.id.change_homepage:
-                saveStartScreen(currentScreen);
-                TextView title = (TextView)myToolbar.findViewById(R.id.toolbar_title);
-                String titleStr = title.getText().toString()+" satt som startsida";
+                saveStartScreen(currentScreenObj.getResourceID());
+                //TextView title = (TextView)myToolbar.findViewById(R.id.toolbar_title);
+                String titleStr = getString(currentScreenObj.getNameID())+ " satt som startsida";
                 Toast.makeText(this,titleStr,Toast.LENGTH_LONG).show();
                 return true;
 
