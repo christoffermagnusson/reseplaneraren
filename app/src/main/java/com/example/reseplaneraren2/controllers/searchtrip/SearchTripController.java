@@ -3,11 +3,13 @@ package com.example.reseplaneraren2.controllers.searchtrip;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import android.widget.TimePicker;
 
 import com.example.reseplaneraren2.MainActivity;
 import com.example.reseplaneraren2.R;
+import com.example.reseplaneraren2.Screen;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +37,18 @@ public class SearchTripController extends Fragment {
     private EditText timeField;
     private Calendar selectedTime;
 
+    private MainActivity mParent;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mParent = (MainActivity) context;
+        } catch (final ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.search_trip_layout, container, false);
@@ -45,6 +60,12 @@ public class SearchTripController extends Fragment {
 
         ((MainActivity)getActivity()).changeTitle("Sök resa");
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mParent.setCurrentScreen(Screen.SEARCH_TRIP);
     }
 
     private void setupDefaults() {

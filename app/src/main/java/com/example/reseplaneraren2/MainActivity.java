@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuItemImpl;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -35,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
     public static Screen currentScreenObj;
 
     private IJourneyPlannerData journeyPlanner;
-
-
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -64,6 +62,18 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    public void setCurrentScreen (Screen screen) {
+        if (screen.getNavigationID() != 0) { // If 0, it's a "sub-screen"
+            currentScreenObj = screen;
+            for (int i = 0; i < navigationView.getMenu().size(); i++) {
+                MenuItem item = navigationView.getMenu().getItem(i);
+                if (item.getItemId() == currentScreenObj.getNavigationID()) {
+                    item.setChecked(true);
+                }
+            }
+        }
+    }
 
     public void changeTitle(String newTitle){
     Toolbar mToolbar = (Toolbar) findViewById(R.id.my_toolbar);

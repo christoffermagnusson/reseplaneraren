@@ -87,6 +87,7 @@ public class NextTripController extends Fragment implements UIStopLocationHandle
     public void onStart() {
         super.onStart();
         startLocationService();
+        mParent.setCurrentScreen(Screen.NEXT_TRIP);
     }
 
     @Override
