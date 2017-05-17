@@ -44,19 +44,19 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_search_trip:
                     inflate(Screen.SEARCH_TRIP);
-                    currentScreen=R.id.navigation_search_trip;
+                    currentScreen=Screen.SEARCH_TRIP.getResourceID();
                     return true;
                 case R.id.navigation_next_trip:
                     inflate(Screen.NEXT_TRIP);
-                    currentScreen=R.id.navigation_next_trip;
+                    currentScreen=Screen.NEXT_TRIP.getResourceID();
                     return true;
                 case R.id.navigation_favorites:
                     inflate(Screen.FAVORITES);
-                    currentScreen=R.id.navigation_favorites;
+                    currentScreen=Screen.FAVORITES.getResourceID();
                     return true;
                 case R.id.navigation_ticket:
                     inflate(Screen.TICKET);
-                    currentScreen=R.id.navigation_ticket;
+                    currentScreen=Screen.TICKET.getResourceID();
                     return true;
             }
             return false;
@@ -107,18 +107,22 @@ public class MainActivity extends AppCompatActivity {
             case R.layout.search_trip_layout:
                 inflate(Screen.SEARCH_TRIP);
                 navigationView.setSelectedItemId(R.id.navigation_search_trip);
+                currentScreen=Screen.SEARCH_TRIP.getResourceID();
                 break;
             case R.layout.next_trip_layout:
                 inflate(Screen.NEXT_TRIP);
                 navigationView.setSelectedItemId(R.id.navigation_next_trip);
+                currentScreen=Screen.NEXT_TRIP.getResourceID();
                 break;
             case R.layout.favorites_layout:
                 inflate(Screen.FAVORITES);
                 navigationView.setSelectedItemId(R.id.navigation_favorites);
+                currentScreen=Screen.FAVORITES.getResourceID();
                 break;
             case R.layout.ticket_layout:
                 inflate(Screen.TICKET);
                 navigationView.setSelectedItemId(R.id.navigation_ticket);
+                currentScreen=Screen.TICKET.getResourceID();
                 break;
             default: return;
         }

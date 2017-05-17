@@ -14,10 +14,10 @@ public enum Screen {
 
     INITIAL_SETUP(new InitialSetupController()),
 
-    SEARCH_TRIP(new SearchTripController()),
-    NEXT_TRIP(new NextTripController()),
-    FAVORITES(new FavoritesController()),
-    TICKET(new TicketController()),
+    SEARCH_TRIP(new SearchTripController(),R.layout.search_trip_layout),
+    NEXT_TRIP(new NextTripController(),R.layout.next_trip_layout),
+    FAVORITES(new FavoritesController(),R.layout.favorites_layout),
+    TICKET(new TicketController(),R.layout.ticket_layout),
 
     DEPARTURE_DISPLAY (new DepartureBoardDisplayController()),
     MY_TICKET_DISPLAY (new MyTicketFragment()),
@@ -28,15 +28,25 @@ public enum Screen {
 
     private Fragment fragment;
 
+    private int resourceID;
 
 
-    Screen(Fragment fragment) {
+
+    Screen(Fragment fragment, int resourceID) {
         this.fragment = fragment;
+        this.resourceID = resourceID;
+    }
+
+    Screen(Fragment fragment){
+        this.fragment=fragment;
+
     }
 
     public Fragment getFragment() {
         return fragment;
     }
+
+    public int getResourceID(){ return resourceID; }
 
 
 }
